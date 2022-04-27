@@ -12,7 +12,7 @@
         <el-button class="btn" type="primary">Create Fee</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Manage Users</el-button>
+        <el-button class="btn" type="primary"  @click="ManageUsers">Manage Users</el-button>
         <el-button class="btn" type="primary">Manage Overdraft</el-button>
       </div>
       <div class="menu-item" >
@@ -23,6 +23,10 @@
         <el-button class="btn" type="primary">Replace Manager</el-button>
         <el-button class="btn" type="primary">Manager Account</el-button>
       </div>
+      <div class="menu-item" >
+        <el-button class="btn" type="primary">Create Bank</el-button>
+        <!-- <el-button class="btn" type="primary" @click="Create Bank">View Stats</el-button> -->
+      </div>
     </div>
   </div>
 </template>
@@ -32,6 +36,9 @@ export default {
   methods:{
     ViewStats: function(){
       this.$router.push('/viewstats')
+    },
+    ManageUsers: function(){
+      this.$router.push('/manageusers')
     }
   }
 }

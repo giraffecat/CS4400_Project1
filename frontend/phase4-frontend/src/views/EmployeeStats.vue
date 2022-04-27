@@ -1,9 +1,9 @@
 <template>
   <div class="flex-container">
     <div class="center">
-      <el-table
-      stripe
-      style="width: 100%">
+      <div class = "title">Employee Stats</div>
+      <el-table stripe style= "width: 100%">
+
         <el-table-column
           prop="date"
           label="PerID">
@@ -55,10 +55,27 @@
 
 <script>
 export default {
-    data() {
-      return {
-      }
+  name:'employeeStats',
+  mounted(){
+    this.getData();
+  },
+  data() {
+    return {
     }
+  },
+  methods:{
+    getData:function(){
+      // console.log("asda",this.account, this.password)
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/employeeStats", // 接口地址
+      data: {
+        }
+      }).then(response => {
+        console.log(response.data[0]);   
+      }).catch(error => console.log(error, "error")); 
+    }
+  }
   }
 </script>
 

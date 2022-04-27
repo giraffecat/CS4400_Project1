@@ -34,12 +34,21 @@ export default {
         password: this.password
         }
       }).then(response => {
+        // console.log(response.data[0].role);
         if(response.data.length != 0) {
           this.$message({
             message: 'Sucessfully login!',
             type: 'success'
           });
-          this.$router.push('/adminmenu')
+          if(response.data[0].role=='customer'){
+            this.$router.push('/customermenu')
+          }
+          if(response.data[0].role=='admin'){
+            this.$router.push('/adminmenu')
+          }
+          if(response.data[0].role=='manager'){
+            this.$router.push('/managermenu')
+          }
         } else {
           this.$message({
             message: 'Check your accountID and password!',
@@ -81,9 +90,9 @@ export default {
 .center {
   display: flex;
   flex-direction: column;
-  width: 500px;
-  height: 500px;
-  padding: 100px;
+  width: 300px;
+  height: 300px;
+  padding: 200px;
   margin: auto;
   border: 1px solid #409EFF;
   text-align: left;
