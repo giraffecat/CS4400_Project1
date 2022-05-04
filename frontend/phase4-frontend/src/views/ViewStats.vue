@@ -3,16 +3,16 @@
     <div class="center">
       <div class = "title">ViewStats</div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary" @click="ViewStats">Display Accounts Stats</el-button>
+        <el-button class="btn" type="primary" @click="ViewAccountsStats">Display Accounts Stats</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary" @click="ViewStats">Display Corporation Stats</el-button>
+        <el-button class="btn" type="primary" @click="ViewCorporationsStats">Display Corporation Stats</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary" @click="ViewStats">Display Bank Stats</el-button>
+        <el-button class="btn" type="primary" @click="ViewBankStats">Display Bank Stats</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary" @click="ViewStats">Display Customers Stats</el-button>
+        <el-button class="btn" type="primary" @click="ViewCustomerStats">Display Customers Stats</el-button>
       </div>
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="ViewEmployeesStats">Display Employees Stats</el-button>
@@ -27,6 +27,18 @@ export default {
   methods:{
     ViewEmployeesStats:function(){
       this.$router.push('/employeeStats')
+    },
+    ViewAccountsStats:function(){
+      this.$router.push('/accountStats')
+    },
+    ViewCorporationsStats:function(){
+      this.$router.push('/corporationStats')
+    },
+    ViewBankStats:function() {
+      this.$router.push('/bankStats')
+    },
+    ViewCustomerStats:function() {
+      this.$router.push('/customerStats')
     }
   }
 }

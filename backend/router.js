@@ -40,6 +40,73 @@ router.post('/login',(req,res)=>{
     })
 })
 
+router.get('/EmployeeStats',(req,res)=>{
+    let query = `select * from display_employee_stats`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/AccountStats',(req,res)=>{
+    let query = `select * from display_account_stats;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+
+router.get('/CorporationStats',(req,res)=>{
+    let query = `select * from display_corporation_stats;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/BankStats',(req,res)=>{
+    let query = `select * from display_bank_stats;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/CustomerStats',(req,res)=>{
+    let query = `select * from display_customer_stats;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+
 router.get('/register',(req,res)=>{
     res.send('注册')
 })

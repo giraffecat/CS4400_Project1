@@ -1,31 +1,23 @@
 <template>
   <div class="flex-container">
     <div class="center">
-      <h2 align = "center">Employee Stats</h2>
+      <h2 align = "center">Display bank stats</h2>
       <el-table
-      :data="employeeStats"
+      :data="bankStats"
       stripe
-      style="width: 100%"
+      style="width:100%"
       max-height="100vh">
         <el-table-column
-          prop="person_identifier"
-          label="PerID">
+          prop="bank_identifier"
+          label="Bank ID">
         </el-table-column>
         <el-table-column
-          prop="tax_identifier"
-          label="TaxID">
+          prop="name_of_corporation"
+          label="Corporation Name">
         </el-table-column>
         <el-table-column
-          prop="employee_name"
-          label="Name">
-        </el-table-column>
-        <el-table-column
-          prop="date_of_birth"
-          label="DOB">
-        </el-table-column>
-        <el-table-column
-          prop="joined_system"
-          label="Date Joined">
+          prop="name_of_bank"
+          label="Bank Name">
         </el-table-column>
         <el-table-column
           prop="street"
@@ -44,12 +36,16 @@
           label="Zip">
         </el-table-column>
         <el-table-column
-          prop="number_of_banks"
-          label="Number of Banks">
+          prop="number_of_accounts"
+          label="Number of Accounts">
         </el-table-column>
         <el-table-column
           prop="bank_assets"
-          label="Bank Assets">
+          label="Bank Assets($)">
+        </el-table-column>
+        <el-table-column
+          prop="total_assets"
+          label="Total Assets($)">
         </el-table-column>
       </el-table>
     </div>
@@ -60,30 +56,21 @@
 export default {
     data() {
       return {
-        employeeStats:[]
+        bankStats:[]
       }
     },
     mounted(){
-      this.EmployeeStats();
+      this.BankStats();
     },
     methods: {
-      EmployeeStats:function(){
+      BankStats:function(){
         console.log("asda",this.account, this.password)
         this.axios({
         method: "get",
-        url: "http://localhost:3000/EmployeeStats", // 接口地址
+        url: "http://localhost:3000/BankStats", // 接口地址
         }).then(res => {
-          //日期处理
-          for(let i = 0; i < res.data.length; i++) {
-            if(res.data[i].date_of_birth){
-              res.data[i].date_of_birth = res.data[i].date_of_birth.split("T")[0];
-            }
-            if(res.data[i].joined_system){
-              res.data[i].joined_system = res.data[i].joined_system.split("T")[0];
-            }
-          }
-          this.employeeStats = res.data;
-          console.log("employee",res.data);
+          this.bankStats = res.data;
+          console.log("acount",res.data);
         })    
       }
     }

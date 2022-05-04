@@ -1,41 +1,41 @@
 <template>
   <div class="flex-container">
     <div class="center">
-      <h2 align = "center">Employee Stats</h2>
+      <h2 align = "center">Display customer stats</h2>
       <el-table
-      :data="employeeStats"
+      :data="customerStats"
       stripe
-      style="width: 100%"
+      style="width:100%"
       max-height="100vh">
         <el-table-column
           prop="person_identifier"
-          label="PerID">
+          label="Customer ID">
         </el-table-column>
         <el-table-column
           prop="tax_identifier"
-          label="TaxID">
+          label="TAX ID">
         </el-table-column>
         <el-table-column
-          prop="employee_name"
-          label="Name">
+          prop="customer_name"
+          label="Customer Name">
         </el-table-column>
         <el-table-column
           prop="date_of_birth"
-          label="DOB">
+          label="Date of Birth">
         </el-table-column>
-        <el-table-column
+                <el-table-column
           prop="joined_system"
-          label="Date Joined">
+          label="Joined Date">
         </el-table-column>
         <el-table-column
           prop="street"
           label="Street">
         </el-table-column>
-        <el-table-column
+                <el-table-column
           prop="city"
           label="City">
         </el-table-column>
-        <el-table-column
+                <el-table-column
           prop="state"
           label="State">
         </el-table-column>
@@ -43,13 +43,13 @@
           prop="zip"
           label="Zip">
         </el-table-column>
-        <el-table-column
-          prop="number_of_banks"
-          label="Number of Banks">
+      <el-table-column
+          prop="number_of_accounts"
+          label="Number of Accounts">
         </el-table-column>
         <el-table-column
-          prop="bank_assets"
-          label="Bank Assets">
+          prop="ifnull(customer_assets,0)"
+          label="Customer Assets ($)">
         </el-table-column>
       </el-table>
     </div>
@@ -60,30 +60,29 @@
 export default {
     data() {
       return {
-        employeeStats:[]
+        customerStats:[]
       }
     },
     mounted(){
-      this.EmployeeStats();
+      this.CustomerStats();
     },
     methods: {
-      EmployeeStats:function(){
-        console.log("asda",this.account, this.password)
+      CustomerStats:function(){
         this.axios({
         method: "get",
-        url: "http://localhost:3000/EmployeeStats", // 接口地址
+        url: "http://localhost:3000/CustomerStats", // 接口地址
         }).then(res => {
           //日期处理
           for(let i = 0; i < res.data.length; i++) {
-            if(res.data[i].date_of_birth){
+            if( res.data[i].date_of_birth){
               res.data[i].date_of_birth = res.data[i].date_of_birth.split("T")[0];
             }
-            if(res.data[i].joined_system){
+            if( res.data[i].joined_system){
               res.data[i].joined_system = res.data[i].joined_system.split("T")[0];
             }
           }
-          this.employeeStats = res.data;
-          console.log("employee",res.data);
+          this.customerStats = res.data;
+          console.log("customerStats",res.data)
         })    
       }
     }

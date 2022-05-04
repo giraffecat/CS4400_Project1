@@ -34,6 +34,7 @@ export default {
         password: this.password
         }
       }).then(response => {
+        console.log("response",response)
         if(response.data.length != 0) {
           this.$message({
             message: 'Sucessfully login!',
@@ -81,9 +82,9 @@ export default {
 .center {
   display: flex;
   flex-direction: column;
-  width: 500px;
-  height: 500px;
-  padding: 100px;
+  width: 300px;
+  height: 300px;
+  padding: 200px;
   margin: auto;
   border: 1px solid #409EFF;
   text-align: left;
