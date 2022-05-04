@@ -8,23 +8,23 @@
         <el-button class="btn" type="primary" @click="ViewStats">View Stats</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Create Corporation</el-button>
-        <el-button class="btn" type="primary" @click="CreateFee">Create Fee</el-button>
+        <el-button class="btn" type="primary" @click="CreateCorp">Create Corporation</el-button>
+        <el-button class="btn" type="primary">Create Fee</el-button>
       </div>
       <div class="menu-item" >
         <el-button class="btn" type="primary"  @click="ManageUsers">Manage Users</el-button>
-        <el-button class="btn" type="primary" @click="AManageOverdraft">Manage Overdraft</el-button>
+        <el-button class="btn" type="primary">Manage Overdraft</el-button>
       </div>
       <div class="menu-item" >
         <el-button class="btn" type="primary">Hire Worker</el-button>
-        <el-button class="btn" type="primary" @click="Pay">Pay Employees</el-button>
+        <el-button class="btn" type="primary">Pay Employees</el-button>
       </div>
       <div class="menu-item" >
         <el-button class="btn" type="primary">Replace Manager</el-button>
-        <el-button class="btn" type="primary" @click="AManageAccount">Manage Accounts</el-button>
+        <el-button class="btn" type="primary">Manager Account</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Create Bank</el-button>
+        <el-button class="btn" type="primary" @click="CreateBank">Create Bank</el-button>
         <!-- <el-button class="btn" type="primary" @click="Create Bank">View Stats</el-button> -->
       </div>
     </div>
@@ -40,17 +40,11 @@ export default {
     ManageUsers: function(){
       this.$router.push('/manageusers')
     },
-    AManageAccount: function(){
-      this.$router.push('/adminManageAccount')
+    CreateCorp: function(){
+      this.$router.push('/createCorp')
     },
-    CreateFee: function(){
-      this.$router.push('/createfee')
-    },
-    AManageOverdraft: function(){
-      this.$router.push('/adminManageOverdraft')
-    },
-    Pay: function(){
-      this.$router.push('/pay')
+    CreateBank: function(){
+      this.$router.push('/createBank')
     }
   }
 }

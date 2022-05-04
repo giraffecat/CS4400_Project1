@@ -46,6 +46,41 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/EmployeeStats.vue')
   },
   {
+    path: '/createCorp',
+    name: 'CreateCorp',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateCorp.vue')
+  },
+  {
+    path: '/createBank',
+    name: 'CreateBank',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateBank.vue')
+  },
+  {
+    path: '/createEmployee',
+    name: 'CreateEmployee',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateEmployee.vue')
+  },
+  {
+    path: '/createCustomer',
+    name: 'CreateCustomer',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateCustomer.vue')
+  },
+  {
+    path: '/stopRole',
+    name: 'StopRole',
+    component: () => import(/* webpackChunkName: "about" */ '../views/StopRole.vue')
+  },
+  {
+    path: '/hireWorker',
+    name: 'HireWorker',
+    component: () => import(/* webpackChunkName: "about" */ '../views/HireWorker.vue')
+  },
+  {
+    path: '/replaceManager',
+    name: 'ReplaceManager',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ReplaceManager.vue')
+  },
+  {
     path: '/customerManageAccount',
     name: 'CustomerManageAccount',
     component: () => import(/* webpackChunkName: "about" */ '../views/CustomerManageAccount.vue')
