@@ -21,9 +21,24 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AdminMenu.vue')
   },
   {
+    path: '/customermenu',
+    name: 'CustomerMenu',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CustomerMenu.vue')
+  },
+  {
+    path: '/managermenu',
+    name: 'ManagerMenu',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ManagerMenu.vue')
+  },
+  {
     path: '/viewstats',
     name: 'ViewStats',
     component: () => import(/* webpackChunkName: "about" */ '../views/ViewStats.vue')
+  },
+  {
+    path: '/ManageUsers',
+    name: 'manageusers',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ManageUsers.vue')
   },
   {
     path: '/employeeStats',

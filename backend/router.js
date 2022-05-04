@@ -26,7 +26,7 @@ router.post('/login',(req,res)=>{
     console.log("account",req.body.account, req.body.password);
     let query = `SELECT perID, pwd, role from
     (SELECT person.perID, pwd, "admin" as role FROM person join system_admin on person.perID = system_admin.perID 
-    UNION SELECT person.perID, pwd, "employee" as role FROM person join employee on person.perID = employee.perID 
+    UNION SELECT person.perID, pwd, "manager" as role FROM person join bank on person.perID = bank.manager 
     UNION SELECT person.perID, pwd, "customer" as role FROM person join customer on person.perID = customer.perID) as tb1 
     where tb1.perID = "${req.body.account}" and tb1.pwd = "${req.body.password}"`
     let promise = new Promise(function(resolve, reject) {

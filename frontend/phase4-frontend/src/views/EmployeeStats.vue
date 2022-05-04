@@ -86,7 +86,7 @@ export default {
           console.log("employee",res.data);
         })    
       }
-    }
+  }
   }
 </script>
 

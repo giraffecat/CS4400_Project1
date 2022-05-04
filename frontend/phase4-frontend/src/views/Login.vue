@@ -40,7 +40,15 @@ export default {
             message: 'Sucessfully login!',
             type: 'success'
           });
-          this.$router.push('/adminmenu')
+          if(response.data[0].role=='customer'){
+            this.$router.push('/customermenu')
+          }
+          if(response.data[0].role=='admin'){
+            this.$router.push('/adminmenu')
+          }
+          if(response.data[0].role=='manager'){
+            this.$router.push('/managermenu')
+          }
         } else {
           this.$message({
             message: 'Check your accountID and password!',
