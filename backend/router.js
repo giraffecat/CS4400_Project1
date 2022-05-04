@@ -67,9 +67,24 @@ router.post('/employeeStats',(req,res)=>{
     })
 })
 
+
 router.get('/register',(req,res)=>{
     res.send('注册')
 })
+
+// router.post('/customerManageAccount',(req,res)=>{
+//     // res.setHeader('Access-Control-Allow-Origin', '*')
+//     let query = `SELECT accountID from access;
+//     SELECT perID from customer;`
+//     let promise = new Promise(function(resolve, reject) {
+//         db.query(query, [], function (results, fields) {
+//             // 以json的形式返回
+//             resolve(results)
+//         })
+//     }).then(data => {
+//         res.json(data)
+//     })
+// })
 
 // 导出路由对象
 module.exports = router

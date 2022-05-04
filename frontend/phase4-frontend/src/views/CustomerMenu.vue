@@ -5,16 +5,19 @@
         Customer Menu
       </div>
       <div class="menu-item" >        
-        <el-button class="btn" type="primary">Manage Accounts</el-button>
+        <el-button class="btn" type="primary" @click="ManageAccount">Manage Accounts</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Deposit / Withdrawal</el-button>
+        <el-button class="btn" type="primary" @click="Deposit">Deposit</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Manage Overdraft</el-button>
+        <el-button class="btn" type="primary" @click="Withdrawal">Withdrawal</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Make Transfer</el-button>
+        <el-button class="btn" type="primary" @click="CManageOverdraft">Manage Overdraft</el-button>
+      </div>
+      <div class="menu-item" >
+        <el-button class="btn" type="primary" @click="Transfer">Make Transfer</el-button>
       </div>
       <div class="menu-item" >
         <el-button class="btn" type="primary">Create Bank</el-button>
@@ -26,6 +29,21 @@
 <script>
 export default {
   methods:{
+    ManageAccount: function(){
+      this.$router.push('/customerManageAccount')
+    },
+    CManageOverdraft: function(){
+      this.$router.push('/customerManageOverdraft')
+    },
+    Deposit: function(){
+      this.$router.push('/deposit')
+    },
+    Withdrawal: function(){
+      this.$router.push('/withdrawal')
+    },
+    Transfer: function(){
+      this.$router.push('/transfer')
+    }
     // ViewStats: function(){
     //   this.$router.push('/viewstats')
     // },

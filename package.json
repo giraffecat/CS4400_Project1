@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "express": "^4.18.0",
     "v-fit-columns": "^0.2.0"
   }
 }
