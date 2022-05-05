@@ -102,8 +102,10 @@ export default {
             AccountID: this.selectedAccount
           }
           }).then(res => {
-            // console.log("account",res.data)
-            // this.form.accountID = res.data
+            this.$message({
+              message: `Sucessfully login! ${this.global.LoginPerson}`,
+              type: 'success'
+            });
           })
       }else {
         this.$message({

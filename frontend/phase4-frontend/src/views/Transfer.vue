@@ -98,10 +98,13 @@ export default {
     },
     GetBankList:function() {
       this.axios({
-      method: "get",
-      url: "http://localhost:3000/GetBanksList", // 接口地址
+      method: "post",
+      url: "http://localhost:3000/GetBanks", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson
+      }
       }).then(res => {
-        console.log("bankIDList",res)
+        console.log("bankID",res)
         this.form.ToBankID = res.data
       })
     },
@@ -121,9 +124,10 @@ export default {
     GetToAccounts: function() {
       this.axios({
       method: "post",
-      url: "http://localhost:3000/GetAccountsList", // 接口地址
+      url: "http://localhost:3000/GetAccounts", // 接口地址
       data:{
-        BankID: this.selectedToBankID
+        LoginPerson: this.global.LoginPerson,
+        BankID: this.selectedBank
       }
       }).then(res => {
         console.log("account",res.data)
@@ -145,6 +149,10 @@ export default {
             ToAccountID: this.selectedToAccount
           }
           }).then(res => {
+            this.$message({
+              message: `Sucessfully Transfer`,
+              type: 'success'
+            });
             // console.log("account",res.data)
             // this.form.accountID = res.data
           })
