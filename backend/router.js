@@ -1,6 +1,7 @@
 // router.js
 
 // 引入express并且获取路由对象
+const { json } = require('express');
 const app = require('express')
 const moment = require('moment')
 
@@ -119,6 +120,19 @@ router.get('/CustomerStats',(req,res)=>{
 
 router.get('/GetAccounts',(req,res)=>{
     let query = `select accountID from bank_account;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/GetBankAccounts',(req,res)=>{
+    let query = `select bankID, accountID from bank_account;`;
     let promise = new Promise(function(resolve, reject) {
         db.query(query, [], function (results, fields) {
             // 以json的形式返回
@@ -470,7 +484,7 @@ router.get('/corpList',(req,res)=>{
 
 router.post('/replaceManager',(req,res)=>{
     var promise = new Promise(function(resolve, reject){
-        console.log(req.body)
+        console.log(req.body);
         let query = `call replace_manager("${req.body.EmployeeID}", "${req.body.BankID}", ${req.body.Salary});`;
         connection.query(query, function (err, result) {
         if(err){
@@ -478,6 +492,51 @@ router.post('/replaceManager',(req,res)=>{
           return;
         }        
         console.log("replace",result, "-------")
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
+router.post('/AddAccountAccess',(req,res)=>{
+    console.log("AddAccountAccess",req.body)
+    let param = req.body;
+    var promise = new Promise(function(resolve, reject){
+        let time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+        let query = `call add_account_access('${param.LoginPerson}', '${param.Customer}', '${param.AccountType}', '${param.BankID}','${param.AccountIP}', ${param.Balance}, ${param.InterestRate}, null, ${param.MinBalance}, null, ${param.MaxWithdrawals}, '${time}');`;
+        console.log("query",query)
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[INSERT ERROR] - ',err.message);
+          return;
+        }        
+        console.log("add account access",result)
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
+router.post('/RemoveAccountAccess',(req,res)=>{
+    console.log("RemoveAccountAccess",req.body)
+    let param = req.body;
+    var promise = new Promise(function(resolve, reject){
+        let time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+        let query = `call remove_account_access('${param.LoginPerson}', '${param.Customer}', '${param.BankID}','${param.AccountIP}');`;
+        console.log("query",query)
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[INSERT ERROR] - ',err.message);
+          res.end(JSON.stringify("error"))
+          return;
+        }        
+        console.log("remove account access",result)
         data = result
         resolve(data)  
         // res.end(JSON.stringify(data));
