@@ -64,7 +64,7 @@ export default {
     },
     methods: {
       back: function(){
-        this.$router.push('/adminmenu')
+        this.$router.push('/manageusers')
       },   
       onCreateEmployee() {
         console.log('Create employee!');
