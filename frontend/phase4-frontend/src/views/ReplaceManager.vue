@@ -7,22 +7,20 @@
       <div class="replace-form" >
         <el-form ref="form" :model="form" label-width="100px">
        <el-form-item>
-       <el-select v-model="value" placeholder="请选择">
+       <el-select v-model="selectedBank" placeholder="BankID">
             <el-option
-              v-for="item in corpID"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in form.bankID"
+              :key="item.bankID"
+              :value="item.bankID">
             </el-option>
           </el-select>
        </el-form-item>
               <el-form-item>
-       <el-select v-model="value" placeholder="请选择">
+       <el-select v-model="selectedEmployee" placeholder="Employee">
             <el-option
-              v-for="item in corpID"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in form.Employee"
+              :key="item.perID"
+              :value="item.perID">
             </el-option>
           </el-select>
        </el-form-item>
@@ -32,8 +30,8 @@
         </el-form>
       </div>
       <div class="buttons-item" >
-        <el-button class="btn" type="primary" @click="onCreate">Back</el-button>
-        <el-button class="btn" type="primary" @click="onCancel">Confirm</el-button>
+        <el-button class="btn" type="primary" @click="back">Back</el-button>
+        <el-button class="btn" type="primary" @click="ReplaceManager">Confirm</el-button>
       </div>
     </div>
   </div>
@@ -42,24 +40,69 @@
 export default {
     data(){
         return{
-            form: {
-          ID: '',
-          LN: '',
-          SN: '',
-          Assets: ''
-        }
-        }
+          form: {
+          BankID: null,
+          Employee:null,
+        },
+        selectedBank:null,
+        selectedEmployee:null,
+      }
     },
+    mounted(){
+      this.GetBanks();
+    },
+    watch: {
+    selectedBank(val){
+      this.GetEmployeeByBanks();
+    },
+   
+  },
     methods: {
+      back: function(){
+        this.$router.push('/adminmenu')
+      },
       onCreate() {
         console.log('submit!');
       },
       onCancel(){
           console.log('cancel!')
+      },
+      GetBanks:function() {
+      this.axios({
+      method: "get",
+      url: "http://localhost:3000/GetBanksList", // 接口地址
+      }).then(res => {
+        console.log("bankID",res)
+        this.form.bankID = res.data
+      })
+    },
+    GetEmployeeByBanks:function(){
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/GetEmployeeByBanks", // 接口地址
+      data:{
+        BankID: this.selectedBank
       }
+      }).then(res => {
+        this.form.Employee = res.data
+      })
+    },
+    ReplaceManager:function() {
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/ReplaceManager", // 接口地址
+      data:{
+        BankID: this.selectedBank
+      }
+      }).then(res => {
+        this.form.Employee = res.data
+      })
     }
+  }
 }
 </script>
+
+
 
 <style>
 .flex-container {

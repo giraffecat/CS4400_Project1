@@ -156,6 +156,19 @@ router.get('/GetBanksList',(req,res)=>{
     })
 })
 
+router.post('/GetEmployeeByBanks',(req,res)=>{
+    let query = `select perID from workFor where bankID = "${req.body.BankID}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
 router.post('/GetBanks',(req,res)=>{
     console.log("account",req.body.LoginPerson);
     let query = `select bankID from access where perID = "${req.body.LoginPerson}";`;
@@ -409,6 +422,19 @@ router.get('/managerList',(req,res)=>{
 
 router.get('/corpList',(req,res)=>{
     let query = `select corpID from corporation;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.post('/ReplaceManager',(req,res)=>{
+    let query = `call replace_manager('${req.body.employeeID}', '${req.body.bankID}', ${});;`;
     let promise = new Promise(function(resolve, reject) {
         db.query(query, [], function (results, fields) {
             // 以json的形式返回
