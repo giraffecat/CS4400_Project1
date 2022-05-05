@@ -19,9 +19,9 @@
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="Transfer">Make Transfer</el-button>
       </div>
-      <div class="menu-item" >
+      <!-- <div class="menu-item" >
         <el-button class="btn" type="primary">Create Bank</el-button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

@@ -9,7 +9,7 @@
         <el-button class="btn" type="primary" @click="Pay">Pay Employee</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Hire Worker</el-button>
+        <el-button class="btn" type="primary" @click="HireWorker">Hire Worker</el-button>
       </div>
     </div>
   </div>
@@ -20,6 +20,9 @@ export default {
   methods:{
     Pay: function(){
       this.$router.push('/pay')
+    },
+    HireWorker:function() {
+      this.$router.push('/hireWorker')
     }
     // ViewStats: function(){
     //   this.$router.push('/viewstats')

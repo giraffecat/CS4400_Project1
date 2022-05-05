@@ -34,7 +34,7 @@ export default {
         password: this.password
         }
       }).then(response => {
-        // console.log(response.data[0].role);
+        console.log("response",response)
         if(response.data.length != 0) {
           this.$message({
             message: 'Sucessfully login!',
