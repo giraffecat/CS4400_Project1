@@ -3,6 +3,14 @@
 // 引入express并且获取路由对象
 const app = require('express')
 const router = app.Router()
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password: 'kd971119', // mysql用户密码
+    port: '3306', // 端口
+    database: 'bank_management', // 数据
+  });
 
 var db = require('./db.js')
 
@@ -150,6 +158,24 @@ router.get('/register',(req,res)=>{
     res.send('注册')
 })
 
+router.post('/createCorp',(req,res)=>{
+    console.log("corporation",req.body.corpID, req.body.corpLN, req.body.corpSN, req.body.corpAssets);
+    // let query = `insert into corporation values ("${req.body.corpID}", "${req.body.corpLN}", "${req.body.corpSN}", "${req.body.corpAssets}");`;
+    var promise = new Promise(function(resolve, reject){
+        var query = `insert into corporation values ("${req.body.corpID}", "${req.body.corpLN}", "${req.body.corpSN}", "${req.body.corpAssets}");`;
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[INSERT ERROR] - ',err.message);
+          return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
+      })
+})
 // router.post('/customerManageAccount',(req,res)=>{
 //     // res.setHeader('Access-Control-Allow-Origin', '*')
 //     let query = `SELECT accountID from access;
