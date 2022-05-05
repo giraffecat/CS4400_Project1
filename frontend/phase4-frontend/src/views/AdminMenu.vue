@@ -9,19 +9,19 @@
       </div>
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="CreateCorp">Create Corporation</el-button>
-        <el-button class="btn" type="primary">Create Fee</el-button>
+        <el-button class="btn" type="primary" @click="CreateBank">Create Fee</el-button>
       </div>
       <div class="menu-item" >
         <el-button class="btn" type="primary"  @click="ManageUsers">Manage Users</el-button>
-        <el-button class="btn" type="primary">Manage Overdraft</el-button>
+        <el-button class="btn" type="primary" @click="AdminManageOverdraft">Manage Overdraft</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Hire Worker</el-button>
-        <el-button class="btn" type="primary">Pay Employees</el-button>
+        <el-button class="btn" type="primary" @click="HireWorker">Hire Worker</el-button>
+        <el-button class="btn" type="primary" @click="Pay">Pay Employees</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Replace Manager</el-button>
-        <el-button class="btn" type="primary">Manager Account</el-button>
+        <el-button class="btn" type="primary" @click="ReplaceManager">Replace Manager</el-button>
+        <el-button class="btn" type="primary" @click="AdminManageAccount">Manager Account</el-button>
       </div>
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="CreateBank">Create Bank</el-button>
@@ -45,6 +45,21 @@ export default {
     },
     CreateBank: function(){
       this.$router.push('/createBank')
+    },
+    AdminManageAccount:function() {
+      this.$router.push('/adminManageAccount')
+    },
+    ReplaceManager:function() {
+      this.$router.push('/replaceManager')
+    },
+    HireWorker:function() {
+      this.$router.push('/hireWorker')
+    },
+    Pay:function() {
+      this.$router.push('/pay')
+    },
+    AdminManageOverdraft:function(){
+      this.$router.push('/adminManageOverdraft')
     }
   }
 }
