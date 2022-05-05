@@ -10,7 +10,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost', // 服务器地址
     user: 'root', // mysql用户名称
-    password: 'zh1998501', // mysql用户密码
+    password: 'kd971119', // mysql用户密码
     port: '3306', // 端口
     database: 'bank_management', // 数据
   });
@@ -673,7 +673,7 @@ router.post('/createBank',(req,res)=>{
     console.log("Bank",req.body);
     // let query = `insert into corporation values ("${req.body.corpID}", "${req.body.corpLN}", "${req.body.corpSN}", "${req.body.corpAssets}");`;
     var promise = new Promise(function(resolve, reject){
-        var query = `call create_bank("${req.body.bankID}","${req.body.bankName}","${req.body.street}","${req.body.city}","${req.body.stateabbr}","${req.body.zipcode}",${req.body.asset},"${req.body.manager}","${req.body.corpID}","${req.body.employeeID}")`;
+        var query = `call create_bank("${req.body.bankID}","${req.body.bankName}","${req.body.street}","${req.body.city}","${req.body.stateabbr}","${req.body.zipcode}",${req.body.asset},"${req.body.corpID}","${req.body.manager}","${req.body.employeeID}")`;
         connection.query(query, function (err, result) {
         if(err){
           console.log('[INSERT ERROR] - ',err.message);
@@ -685,7 +685,10 @@ router.post('/createBank',(req,res)=>{
         });
       }).then(data => {
         res.end(JSON.stringify(data));
-      })
+      }).catch(error => {
+        console.log("error")
+      res.end(JSON.stringify(error));
+    })
 })
 // router.post('/customerManageAccount',(req,res)=>{
 //     // res.setHeader('Access-Control-Allow-Origin', '*')
