@@ -99,20 +99,37 @@ export default {
         }).catch(error => console.log(error, "error")); // 失败的返回
       },
       StopEmployeeRole(){
+        if(this.form.employeeID){
         this.axios({
           method:"post",
           url: "http://localhost:3000/StopEmployeeRole", // 接口地址
           data:{
             PersonID: this.form.employeeID,
           }
-        }).then(res=>{
-          this.$message({
+          }).then(res=>{
+          console.log("StopEmployeeRole",res)
+          if(res.data.affectedRows != 0) {
+            this.$message({
               message: `Sucessfully Stop ${this.form.employeeID}!`,
               type: 'success'
           });
-        }).catch(error => console.log(error, "error")); // 失败的返回
+          } else {
+            this.$message({
+              message: `Can not stop the employee Role!`,
+              type: 'warning'
+          });
+          }
+          }).catch(error => console.log(error, "error")); // 失败的返回
+        }else {
+           this.$message({
+              message: `Select a Employee!`,
+              type: 'warning'
+          });
+        }
       },
+
        StopCustomerRole(){
+        if(this.form.customerID){
         this.axios({
           method:"post",
           url: "http://localhost:3000/StopCustomerRole", // 接口地址
@@ -120,13 +137,28 @@ export default {
             PersonID: this.form.customerID,
           }
         }).then(res=>{
-          this.$message({
-              message: `Sucessfully Stop ${this.form.customerID}!`,
-              type: 'success'
-          });
+          console.log("StopEmployeeRole",res)
+          if(res.data.affectedRows != 0) {
+            console.log("stop")
+            this.$message({
+                message: `Sucessfully Stop ${this.form.customerID}!`,
+                type: 'success'
+            });
+          } else {
+            this.$message({
+              message: `Can not stop the Customer Role!`,
+              type: 'warning'
+            });
+          }
         }).catch(error => console.log(error, "error")); // 失败的返回
+      } else {
+        this.$message({
+          message: `Select a Customer!`,
+          type: 'warning'
+        });
       }
     }
+  }
 }
 </script>
 

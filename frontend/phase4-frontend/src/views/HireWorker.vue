@@ -92,10 +92,18 @@ export default {
             Salary: 1000,
           }
         }).then(res=>{
-          this.$message({
+          console.log("res",res)
+          if(res.data.affectedRows != 0) {
+              this.$message({
               message: `Sucessfully hire ${this.form.employeeID}!`,
               type: 'success'
           });
+          } else {
+             this.$message({
+               message: `Fail to Hire the Worker!`,
+              type: 'warning'
+            });
+          }
         }).catch(error => console.log(error, "error")); // 失败的返回
       }
     }
