@@ -55,7 +55,7 @@ export default {
         console.log('submit!');
         this.axios({
           method:"post",
-          url: "http://localhost:3000/getPersonList", // 接口地址
+          url: "http://localhost:3000/createEmployee", // 接口地址
           data:{
             employeeID: this.form.employeeID,   // 传接口参数
             salary: this.form.salary,
@@ -71,6 +71,7 @@ export default {
       },
       onCancel(){
           console.log('cancel!')
+          this.$router.push('/adminmenu')
       },
       getEmployeeList(){
         this.axios({
