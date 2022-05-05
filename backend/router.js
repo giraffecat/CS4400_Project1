@@ -10,7 +10,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost', // 服务器地址
     user: 'root', // mysql用户名称
-    password: 'kd971119', // mysql用户密码
+    password: 'zh1998501', // mysql用户密码
     port: '3306', // 端口
     database: 'bank_management', // 数据
   });
@@ -223,6 +223,36 @@ router.post('/GetCheckingAccounts',(req,res)=>{
     })
 })
 
+router.get('/GetCheckingAccountsList',(req,res)=>{
+    console.log("GetCheckingAccounts",req.body)
+    let query = `select checking.accountID,checking.bankID from access join checking on access.accountID = checking.accountID and access.bankID = checking.bankID;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            console.log(results)
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/GetSavingAccountList',(req,res)=>{
+    console.log("GetSavingAccountList",req.body)
+    let query = `select accountID,bankID from savings;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            console.log(results)
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
 router.post('/GetSavingAccount',(req,res)=>{
     console.log("GetSavingAccount",req.body)
 
@@ -263,6 +293,7 @@ router.post('/AddOverdraft',(req,res)=>{
         console.log('[INSERT ERROR] - ',err.message);
         return;
         }        
+        console.log("start_overdraft",result)
         data = result
         resolve(data)  
         // res.end(JSON.stringify(data));
