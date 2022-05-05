@@ -32,8 +32,8 @@
         </el-form>
       </div>
       <div class="buttons-item" >
-        <el-button class="btn" type="primary" @click="onCreate">Back</el-button>
-        <el-button class="btn" type="primary" @click="onCancel">Confirm</el-button>
+        <el-button class="btn" type="primary" @click="back">Back</el-button>
+        <el-button class="btn" type="primary" @click="ReplaceManager">Confirm</el-button>
       </div>
     </div>
   </div>
@@ -56,13 +56,16 @@ export default {
       this.getEmployeeList()
     },
     methods: {
+      back: function(){
+        this.$router.push('/adminmenu')
+      },
       onCreate() {
         console.log('submit!');
       },
       onCancel(){
           console.log('cancel!')
       },
-            getBankList(){
+      getBankList(){
         this.axios({
           method:"get",
           url: "http://localhost:3000/getBankList", // 接口地址
@@ -81,10 +84,25 @@ export default {
           this.form.employeeList=result
           console.log(result)
         }).catch(error => console.log(error, "error")); // 失败的返回
+      },
+      ReplaceManager(){
+         this.axios({
+          method:"post",
+          url: "http://localhost:3000/replaceManager", // 接口地址
+          data:{
+            BankID: this.form.bankID,
+            EmployeeID: this.form.employeeID,
+            Salary: this.form.newSalary,
+          }
+        }).then(res=>{
+          console.log(res)
+        }).catch(error => console.log(error, "error")); // 失败的返回
       }
     }
-}
+  }
 </script>
+
+
 
 <style>
 .flex-container {

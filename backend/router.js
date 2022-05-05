@@ -156,6 +156,19 @@ router.get('/GetBanksList',(req,res)=>{
     })
 })
 
+router.post('/GetEmployeeByBanks',(req,res)=>{
+    let query = `select perID from workFor where bankID = "${req.body.BankID}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
 router.post('/GetBanks',(req,res)=>{
     console.log("account",req.body.LoginPerson);
     let query = `select bankID from access where perID = "${req.body.LoginPerson}";`;
@@ -417,6 +430,34 @@ router.get('/corpList',(req,res)=>{
         })
     }).then(data => {
         res.json(data)
+    })
+})
+
+router.post('/replaceManager',(req,res)=>{
+    // let query = `call replace_manager('${req.body.EmployeeID}', '${req.body.BankID}', ${req.body.salary});;`;
+    // let promise = new Promise(function(resolve, reject) {
+    //     db.query(query, [], function (results, fields) {
+    //         // 以json的形式返回
+    //         //判断是不是admin
+    //         resolve(results)
+    //     })
+    // }).then(data => {
+    //     res.json(data)
+    // })
+    var promise = new Promise(function(resolve, reject){
+        console.log(req.body)
+        let query = `call replace_manager("${req.body.EmployeeID}", "${req.body.BankID}", ${req.body.Salary});`;
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[INSERT ERROR] - ',err.message);
+          return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
     })
 })
 
