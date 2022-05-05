@@ -36,8 +36,9 @@ export default {
       }).then(response => {
         console.log("response",response)
         if(response.data.length != 0) {
+          this.global.LoginPerson = this.account;
           this.$message({
-            message: 'Sucessfully login!',
+            message: `Sucessfully login! ${this.global.LoginPerson}`,
             type: 'success'
           });
           if(response.data[0].role=='customer'){

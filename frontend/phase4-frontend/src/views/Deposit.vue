@@ -10,8 +10,20 @@
       </div>
       <div class="amount">
         <div class="menu-item" >To:</div>
-        <el-select v-model="form.bankID" placeholder="Bank"></el-select>
-        <el-select v-model="form.accountID" placeholder="Account"></el-select>
+        <el-select v-model="selectedBank" placeholder="Bank">
+           <el-option
+              v-for="item in form.bankID"
+              :key="item.bankID"
+              :value="item.bankID">
+            </el-option>
+        </el-select>
+        <el-select v-model="selectedAccount" placeholder="Account">
+          <el-option
+              v-for="item in form.accountID"
+              :key="item.accountID"
+              :value="item.accountID">
+            </el-option>
+        </el-select>
       </div>
       <div class="menu-item" >
         <el-button @click="back" class="btn" type="primary">Back</el-button>
@@ -20,6 +32,56 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name:"Deposit",
+  data(){
+    return {
+      form: {
+        accountID:"",
+        bankID:""
+      },
+      Amount:null,
+      option:[],
+      selectedBank:null,
+      selectedAccount:null
+    }
+  },
+  mounted(){
+    this.GetBanks();
+    this.GetAccounts();
+    this.show();
+  },
+  methods: {
+    back: function(){
+      this.$router.push('/customermenu')
+    },
+    GetBanks:function() {
+      this.axios({
+      method: "get",
+      url: "http://localhost:3000/GetBanks", // 接口地址
+      }).then(res => {
+        console.log("bankID",res)
+        this.form.bankID = res.data
+      })
+    },
+    GetAccounts: function() {
+      this.axios({
+      method: "get",
+      url: "http://localhost:3000/GetAccounts", // 接口地址
+      }).then(res => {
+        console.log("account",res.data)
+        this.form.accountID = res.data
+      })
+    },
+    show:function(){
+      console.log(this.global.httpUrl);
+    }
+  }
+}
+</script>
+
 
 <style>
 .flex-container {
@@ -59,23 +121,3 @@
   font-size: 15px;
 }
 </style>
-
-<script>
-export default {
-  name:"Deposit",
-  data(){
-    return {
-      form: {
-        accountID:"",
-        bankID:""
-      },
-      option:[]
-    }
-  },
-  methods: {
-    back: function(){
-      this.$router.push('/customermenu')
-    }
-  }
-}
-</script>

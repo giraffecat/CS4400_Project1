@@ -13,11 +13,23 @@
               </div>
             </div>
             <div class="menu-item" >
-              <el-select v-model="form.accountID" placeholder="Accessible Accounts"></el-select>
+              <el-select v-model="choosedAccount" placeholder="Accessible Accounts">
+                <el-option
+                  v-for="item in form.accountID"
+                  :key="item.accountID"
+                  :value="item.accountID">
+                </el-option>
+              </el-select>
               <el-select v-model="form.bankID" placeholder="Bank"></el-select>
             </div>
             <div class="menu-item" >
-              <el-select v-model="form.customerID" placeholder="Customer"></el-select>
+              <el-select v-model="choosedCustomer" placeholder="Customer">
+                <el-option
+                  v-for="item in form.customerID"
+                  :key="item.perID"
+                  :value="item.perID">
+                </el-option>
+              </el-select>
               <el-select v-model="form.newAccountID" placeholder="Account ID"></el-select>
             </div>
             <div class="menu-item1" >
@@ -126,20 +138,44 @@
 
 export default {
   name:"AdminManageAccount",
+  mounted(){
+    this.GetAccounts();
+    this.GetCustomers();
+  },
   data(){
     return {
       form: {
-        accountID:"",
-        customerID:"",
-        bankID:"",
-        newAccountID:""
+        accountID:[],
+        customerID:[],
+        bankID:[],
+        newAccountID:[]
       },
+      choosedAccount:null,
+      choosedCustomer:null,
       option:[]
     }
   },
   methods: {
     back: function(){
       this.$router.push('/adminmenu')
+    },
+    GetAccounts: function() {
+      this.axios({
+      method: "get",
+      url: "http://localhost:3000/GetAccounts", // 接口地址
+      }).then(res => {
+        console.log("account",res.data)
+        this.form.accountID = res.data
+      })
+    },
+    GetCustomers: function() {
+      this.axios({
+      method: "get",
+      url: "http://localhost:3000/GetCustomers", // 接口地址
+      }).then(res => {
+        console.log("customer",res.data)
+        this.form.customerID = res.data
+      })
     }
   }
 }
