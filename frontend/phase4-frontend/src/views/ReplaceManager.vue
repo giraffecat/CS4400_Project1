@@ -25,7 +25,7 @@
           </el-select>
        </el-form-item>
        <el-form-item>
-            <el-input v-model="form.LN" placeholder="New Salary"></el-input>
+            <el-input v-model="form.salary" placeholder="New Salary"></el-input>
        </el-form-item>
         </el-form>
       </div>
@@ -43,6 +43,7 @@ export default {
           form: {
           BankID: null,
           Employee:null,
+          salary:null,
         },
         selectedBank:null,
         selectedEmployee:null,
@@ -88,15 +89,25 @@ export default {
       })
     },
     ReplaceManager:function() {
-      this.axios({
-      method: "post",
-      url: "http://localhost:3000/ReplaceManager", // 接口地址
-      data:{
-        BankID: this.selectedBank
+      if(this.form.salary && this.selectedBank && this.selectedEmployee) {
+
+        this.axios({
+        method: "post",
+        url: "http://localhost:3000/ReplaceManager", // 接口地址
+        data:{
+          BankID: this.selectedBank,
+          Employee: this.selectedEmployee,
+          salary: this.form.salary
+        }
+        }).then(res => {
+          this.form.Employee = res.data
+        })
+      }else {
+         this.$message({
+          message: `Please check your input!`,
+          type: 'warning'
+        });
       }
-      }).then(res => {
-        this.form.Employee = res.data
-      })
     }
   }
 }

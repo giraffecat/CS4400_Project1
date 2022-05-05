@@ -434,15 +434,30 @@ router.get('/corpList',(req,res)=>{
 })
 
 router.post('/ReplaceManager',(req,res)=>{
-    let query = `call replace_manager('${req.body.employeeID}', '${req.body.bankID}', ${});;`;
-    let promise = new Promise(function(resolve, reject) {
-        db.query(query, [], function (results, fields) {
-            // 以json的形式返回
-            //判断是不是admin
-            resolve(results)
-        })
-    }).then(data => {
-        res.json(data)
+    // let query = `call replace_manager('${req.body.EmployeeID}', '${req.body.BankID}', ${req.body.salary});;`;
+    // let promise = new Promise(function(resolve, reject) {
+    //     db.query(query, [], function (results, fields) {
+    //         // 以json的形式返回
+    //         //判断是不是admin
+    //         resolve(results)
+    //     })
+    // }).then(data => {
+    //     res.json(data)
+    // })
+    var promise = new Promise(function(resolve, reject){
+        console.log(req.body)
+        let query = `call replace_manager('${req.body.EmployeeID}', '${req.body.BankID}', ${req.body.salary});`;
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[INSERT ERROR] - ',err.message);
+          return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
     })
 })
 
