@@ -48,9 +48,13 @@ export default {
       selectedAccount:null
     }
   },
+  watch: {
+    selectedBank(val){
+      this.GetAccounts();
+    }
+  },
   mounted(){
     this.GetBanks();
-    this.GetAccounts();
     this.show();
   },
   methods: {
@@ -74,7 +78,8 @@ export default {
       method: "post",
       url: "http://localhost:3000/GetAccounts", // 接口地址
       data:{
-        LoginPerson: this.global.LoginPerson
+        LoginPerson: this.global.LoginPerson,
+        BankID: this.selectedBank
       }
       }).then(res => {
         console.log("account",res.data)

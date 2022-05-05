@@ -130,19 +130,6 @@ router.get('/GetAccounts',(req,res)=>{
     })
 })
 
-router.post('/GetAccounts',(req,res)=>{
-    let query = `select accountID from access where perID = "${req.body.LoginPerson}";`;
-    let promise = new Promise(function(resolve, reject) {
-        db.query(query, [], function (results, fields) {
-            // 以json的形式返回
-            //判断是不是admin
-            resolve(results)
-        })
-    }).then(data => {
-        res.json(data)
-    })
-})
-
 router.get('/GetCustomers',(req,res)=>{
     let query = `select * from customer;`;
     let promise = new Promise(function(resolve, reject) {
@@ -183,6 +170,18 @@ router.post('/GetBanks',(req,res)=>{
     })
 })
 
+router.post('/GetAccounts',(req,res)=>{
+    let query = `select accountID from access where perID = "${req.body.LoginPerson}" and bankID = "${req.body.BankID}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
 
 
 router.post('/Deposit',(req,res)=>{

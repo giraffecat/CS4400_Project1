@@ -6,7 +6,13 @@
       </div>
       <div class="amount">
         <div class="menu-item" >From:</div>
-        <el-select v-model="form.bankID" placeholder="Bank"></el-select>
+        <el-select v-model="selectedBank" placeholder="Bank">
+          <el-option
+            v-for="item in form.bankID"
+            :key="item.bankID"
+            :value="item.bankID">
+          </el-option>
+        </el-select>
         <el-select v-model="form.accountID" placeholder="Account"></el-select>
       </div>
       <div class="amount">
@@ -25,6 +31,36 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  
+  data(){
+    return {
+      form: {
+        accountID:"",
+        bankID:""
+      },
+      Amount:null,
+      option:[],
+      selectedBank:null,
+      selectedAccount:null
+    }
+  },
+  watch: {
+    selectedBank(val){
+      
+    }
+  },
+  methods: {
+    back: function(){
+      this.$router.push('/customermenu')
+    }
+  }
+}
+</script>
+
+
 
 <style>
 .flex-container {
@@ -64,23 +100,3 @@
   font-size: 15px;
 }
 </style>
-
-<script>
-export default {
-  
-  data(){
-    return {
-      form: {
-        accountID:"",
-        bankID:""
-      },
-      option:[]
-    }
-  },
-  methods: {
-    back: function(){
-      this.$router.push('/customermenu')
-    }
-  }
-}
-</script>
