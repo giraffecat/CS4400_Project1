@@ -84,7 +84,7 @@ export default {
   },
   watch: {
     selectedBank(val){
-      this.GetAccounts();
+      this.GetInterestAccountsByBank();
     }
   },
   mounted(){
@@ -96,22 +96,18 @@ export default {
     },
     GetBanks:function() {
       this.axios({
-      method: "post",
-      url: "http://localhost:3000/GetBanks", // 接口地址
-      data:{
-        LoginPerson: this.global.LoginPerson
-      }
+      method: "get",
+      url: "http://localhost:3000/GetBanksList", // 接口地址
       }).then(res => {
         console.log("bankID",res)
         this.form.bankID = res.data
       })
     },
-    GetAccounts: function() {
+    GetInterestAccountsByBank: function() {
       this.axios({
       method: "post",
-      url: "http://localhost:3000/GetAccounts", // 接口地址
+      url: "http://localhost:3000/GetInterestAccountsByBank", // 接口地址
       data:{
-        LoginPerson: this.global.LoginPerson,
         BankID: this.selectedBank
       }
       }).then(res => {
@@ -119,8 +115,9 @@ export default {
         this.form.accountID = res.data
       })
     },
+
+
     CreateFee:function() {
-      console.log("this.global.LoginPerson",this.global.LoginPerson)
       if(this.selectedBank && this.selectedAccount && this.FeeType) {
         this.axios({
           method: "post",
@@ -132,8 +129,10 @@ export default {
             AccountID: this.selectedAccount
           }
           }).then(res => {
-            // console.log("account",res.data)
-            // this.form.accountID = res.data
+            this.$message({
+              message: `Sucessfully Create Fee!`,
+              type: 'success'
+            });
           })
       }else {
         this.$message({

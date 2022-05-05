@@ -10,7 +10,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost', // 服务器地址
     user: 'root', // mysql用户名称
-    password: '970518', // mysql用户密码
+    password: 'zh1998501', // mysql用户密码
     port: '3306', // 端口
     database: 'bank_management', // 数据
   });
@@ -183,6 +183,18 @@ router.post('/GetAccounts',(req,res)=>{
     })
 })
 
+router.post('/GetInterestAccountsByBank',(req,res)=>{
+    let query = `select interest_bearing.accountID from interest_bearing join bank_account on interest_bearing.accountID = bank_account.accountID and interest_bearing.bankID = bank_account.bankID where interest_bearing.bankID = "${req.body.BankID}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
 router.post('/GetCheckingAccounts',(req,res)=>{
     console.log("GetCheckingAccounts",req.body)
     let query = `select checking.accountID,checking.bankID  from access join checking on access.accountID = checking.accountID and access.bankID = checking.bankID where perID = "${req.body.PersonID}";`;
