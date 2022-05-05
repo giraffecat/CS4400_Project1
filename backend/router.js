@@ -254,6 +254,24 @@ router.post('/Transfer',(req,res)=>{
     })
 })
 
+router.get('/pay',(req,res)=>{
+    console.log("pay");
+    var promise = new Promise(function(resolve, reject){
+        let query = `call account_transfer("${req.body.PersonID}", ${req.body.Amount}, "${req.body.BankID}", "${req.body.AccountID}", "${req.body.ToBankID}", "${req.body.ToAccountID}","${time}");`;        
+        connection.query(query, function (err, result) {
+        if(err){
+        console.log('[INSERT ERROR] - ',err.message);
+        return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+    }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
 router.get('/register',(req,res)=>{
     res.send('注册')
 })
