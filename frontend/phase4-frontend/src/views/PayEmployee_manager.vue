@@ -29,7 +29,7 @@ export default {
       })
     },
     back: function(){
-      this.$router.push('/adminmenu')
+      this.$router.push('/managermenu')
     }
   }
 }

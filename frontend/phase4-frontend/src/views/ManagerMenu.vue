@@ -25,7 +25,7 @@ export default {
       this.$router.push('/')
     },
     Pay: function(){
-      this.$router.push('/pay')
+      this.$router.push('/pay_manager')
     },
     HireWorker:function() {
       this.$router.push('/hireWorker_manager')
