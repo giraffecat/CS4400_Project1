@@ -23,7 +23,7 @@
         </el-select>
       </div>
       <div class="menu-item" >
-        <el-input v-model="FeeType" placeholder="Fee Type"></el-input>
+        <el-input type="number" v-model.number="FeeType" placeholder="Fee Type"></el-input>
       </div>
       <div class="menu-item" >
         <el-button @click="back" class="btn" type="primary">Back</el-button>
