@@ -30,6 +30,7 @@
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="LogOut">Log out</el-button>
       </div>
+      
     </div>
         
   </div>
@@ -75,7 +76,7 @@ export default {
 }
 </script>
 
-<style>
+<style scope>
 .flex-container {
   width: 100vw;
   height: 100vh;

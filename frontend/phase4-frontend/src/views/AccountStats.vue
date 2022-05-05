@@ -8,7 +8,7 @@
       style="width:100%"
       max-height="80vh">
         <el-table-column
-          prop="name_of_bank"
+          prop="Name_of_bank"
           label="Bank">
         </el-table-column>
         <el-table-column
@@ -20,7 +20,7 @@
           label="Account Balance($)">
         </el-table-column>
         <el-table-column
-          prop="number_of_owners"
+          prop="number_of_owner"
           label="Number of Owners">
         </el-table-column>
       </el-table>

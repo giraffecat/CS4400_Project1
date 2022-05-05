@@ -55,9 +55,10 @@ export default {
                 corpID: this.corpform.corpID,   // 传接口参数
                 corpLN: this.corpform.corpLN,
                 corpSN: this.corpform.corpSN,
-                corpAssets: this.corpform.corpAssets == '' ? 0:this.console.corpAssets
+                corpAssets: this.corpform.corpAssets == '' ? 0:this.corpform.corpAssets
               }
             }).then(response=>{
+              console.log("error",response)
               this.$refs[formName].resetFields();
                 this.$message({
                 message: 'Sucessfully submit!',
@@ -65,6 +66,10 @@ export default {
                 });
             }).catch(error => console.log(error, "error")); // 失败的返回
           } else{
+            this.$message({
+              message: 'Fail to submit!',
+              type: 'warning'
+              });
             console.log("error");
             return false
           }
