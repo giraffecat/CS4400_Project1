@@ -6,7 +6,7 @@
       :data="employeeStats"
       stripe
       style="width: 100%"
-      max-height="100vh">
+      max-height="80vh">
         <el-table-column
           prop="person_identifier"
           label="PerID">
@@ -52,6 +52,7 @@
           label="Bank Assets">
         </el-table-column>
       </el-table>
+      <el-button @click="back" class="btn" type="primary">Back</el-button>
     </div>
   </div>
 </template>
@@ -67,6 +68,9 @@ export default {
       this.EmployeeStats();
     },
     methods: {
+      back: function(){
+        this.$router.push('/viewstats')
+      },
       EmployeeStats:function(){
         console.log("asda",this.account, this.password)
         this.axios({

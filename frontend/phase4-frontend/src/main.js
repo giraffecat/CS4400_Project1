@@ -16,3 +16,4 @@ app.use(router)
 
 app.config.globalProperties.axios= axios //全局配置axios
 app.config.globalProperties.global = global
+

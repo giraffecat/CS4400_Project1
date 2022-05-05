@@ -6,7 +6,7 @@
       :data="bankStats"
       stripe
       style="width:100%"
-      max-height="100vh">
+      max-height="80vh">
         <el-table-column
           prop="bank_identifier"
           label="Bank ID">
@@ -48,6 +48,7 @@
           label="Total Assets($)">
         </el-table-column>
       </el-table>
+      <el-button @click="back" class="btn" type="primary">Back</el-button>
     </div>
   </div>
 </template>
@@ -63,6 +64,9 @@ export default {
       this.BankStats();
     },
     methods: {
+      back: function(){
+        this.$router.push('/viewstats')
+      },
       BankStats:function(){
         console.log("asda",this.account, this.password)
         this.axios({

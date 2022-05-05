@@ -6,7 +6,7 @@
       :data="customerStats"
       stripe
       style="width:100%"
-      max-height="100vh">
+      max-height="80vh">
         <el-table-column
           prop="person_identifier"
           label="Customer ID">
@@ -52,6 +52,7 @@
           label="Customer Assets ($)">
         </el-table-column>
       </el-table>
+      <el-button @click="back" class="btn" type="primary">Back</el-button>
     </div>
   </div>
 </template>
@@ -67,6 +68,9 @@ export default {
       this.CustomerStats();
     },
     methods: {
+      back: function(){
+        this.$router.push('/viewstats')
+      },
       CustomerStats:function(){
         this.axios({
         method: "get",
