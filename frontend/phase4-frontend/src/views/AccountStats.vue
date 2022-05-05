@@ -8,7 +8,7 @@
       style="width:100%"
       max-height="80vh">
         <el-table-column
-          prop="Name_of_bank"
+          prop="name_of_bank"
           label="Bank">
         </el-table-column>
         <el-table-column
@@ -20,7 +20,7 @@
           label="Account Balance($)">
         </el-table-column>
         <el-table-column
-          prop="number_of_owner"
+          prop="number_of_owners"
           label="Number of Owners">
         </el-table-column>
       </el-table>
@@ -57,7 +57,7 @@ export default {
   }
 </script>
 
-<style>
+<style scoped>
 .flex-container {
   width: 100vw;
   height: 100vh;
