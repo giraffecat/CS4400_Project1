@@ -6,6 +6,8 @@ import 'element-plus/dist/index.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+import global from './global.vue'
+
 const app = createApp(App)
 
 app.use(router)
@@ -13,3 +15,4 @@ app.use(router)
 .mount('#app')
 
 app.config.globalProperties.axios= axios //全局配置axios
+app.config.globalProperties.global = global

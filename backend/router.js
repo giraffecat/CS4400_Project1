@@ -106,6 +106,45 @@ router.get('/CustomerStats',(req,res)=>{
     })
 })
 
+router.get('/GetAccounts',(req,res)=>{
+    let query = `select accountID from bank_account;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/GetCustomers',(req,res)=>{
+    let query = `select * from customer;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/GetBanks',(req,res)=>{
+    let query = `select bankID from bank;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
 
 router.get('/register',(req,res)=>{
     res.send('注册')
