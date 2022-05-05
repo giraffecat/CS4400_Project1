@@ -396,7 +396,7 @@ router.post('/createCorp',(req,res)=>{
         connection.query(query, function (err, result) {
         if(err){
           console.log('[INSERT ERROR] - ',err.message);
-          return;
+          reject("error")
         }        
         data = result
         resolve(data)  
@@ -404,6 +404,9 @@ router.post('/createCorp',(req,res)=>{
         });
       }).then(data => {
         res.end(JSON.stringify(data));
+      }).catch(error => {
+          console.log("error")
+        res.end(JSON.stringify(error));
       })
 })
 
