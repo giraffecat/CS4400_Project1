@@ -13,7 +13,13 @@
             :value="item.bankID">
           </el-option>
         </el-select>
-        <el-select v-model="form.accountID" placeholder="Account"></el-select>
+        <el-select v-model="selectedAccount" placeholder="Account">
+           <el-option
+            v-for="item in form.accountID"
+            :key="item.accountID"
+            :value="item.accountID">
+          </el-option>
+        </el-select>
       </div>
       <div class="amount">
         <div class="menu-item" >Amount: </div>
@@ -21,12 +27,24 @@
       </div>
       <div class="amount">
         <div class="menu-item" >To:</div>
-        <el-select v-model="form.bankID" placeholder="Bank"></el-select>
-        <el-select v-model="form.accountID" placeholder="Account"></el-select>
+        <el-select v-model="selectedToBankID" placeholder="Bank">
+          <el-option
+            v-for="item in form.ToBankID"
+            :key="item.bankID"
+            :value="item.bankID">
+          </el-option>
+        </el-select>
+        <el-select v-model="selectedToAccount" placeholder="Account">
+          <el-option
+            v-for="item in form.ToAccountID"
+            :key="item.accountID"
+            :value="item.accountID">
+          </el-option>
+        </el-select>
       </div>
       <div class="menu-item" >
         <el-button @click="back" class="btn" type="primary">Back</el-button>
-        <el-button class="btn" type="primary">Confirm</el-button>
+        <el-button class="btn" type="primary" @click="Tranfer">Confirm</el-button>
       </div>
     </div>
   </div>
@@ -34,27 +52,116 @@
 
 <script>
 export default {
-  
+  mounted(){
+    this.GetBanks()
+    this.GetBankList()
+  },
   data(){
     return {
       form: {
         accountID:"",
-        bankID:""
+        bankID:"",
+        ToBankID:"",
+        ToAccountID:""
       },
       Amount:null,
       option:[],
       selectedBank:null,
-      selectedAccount:null
+      selectedAccount:null,
+      selectedToBankID:null,
+      selectedToAccount:null
     }
   },
   watch: {
     selectedBank(val){
-      
+      this.GetAccounts();
+    },
+    selectedToBankID(val){
+      this.GetToAccounts();
     }
   },
   methods: {
     back: function(){
       this.$router.push('/customermenu')
+    },
+    GetBanks:function() {
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/GetBanks", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson
+      }
+      }).then(res => {
+        console.log("bankID",res)
+        this.form.bankID = res.data
+      })
+    },
+    GetBankList:function() {
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/GetBanks", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson
+      }
+      }).then(res => {
+        console.log("bankID",res)
+        this.form.ToBankID = res.data
+      })
+    },
+    GetAccounts: function() {
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/GetAccounts", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson,
+        BankID: this.selectedBank
+      }
+      }).then(res => {
+        console.log("account",res.data)
+        this.form.accountID = res.data
+      })
+    },
+    GetToAccounts: function() {
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/GetAccounts", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson,
+        BankID: this.selectedBank
+      }
+      }).then(res => {
+        console.log("account",res.data)
+        this.form.ToAccountID = res.data
+      })
+    },
+    Tranfer:function() {
+      if(this.Amount && this.selectedBank && this.selectedAccount 
+      && this.selectedToBankID && this.selectedToAccount) {
+        this.axios({
+          method: "post",
+          url: "http://localhost:3000/Transfer", // 接口地址
+          data:{
+            PersonID : this.global.LoginPerson,
+            Amount : this.Amount,
+            BankID: this.selectedBank,
+            AccountID: this.selectedAccount,
+            ToBankID: this.selectedToBankID,
+            ToAccountID: this.selectedToAccount
+          }
+          }).then(res => {
+            this.$message({
+              message: `Sucessfully Transfer`,
+              type: 'success'
+            });
+            // console.log("account",res.data)
+            // this.form.accountID = res.data
+          })
+      }else {
+        this.$message({
+          message: `Please check your select`,
+          type: 'warning'
+        });
+      }
     }
   }
 }

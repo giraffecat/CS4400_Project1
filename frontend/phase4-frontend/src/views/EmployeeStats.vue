@@ -69,7 +69,7 @@ export default {
     },
     methods: {
       back: function(){
-        this.$router.push('/adminmenu')
+        this.$router.push('/viewstats')
       },
       EmployeeStats:function(){
         console.log("asda",this.account, this.password)

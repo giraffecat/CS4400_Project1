@@ -143,18 +143,18 @@ router.get('/GetCustomers',(req,res)=>{
     })
 })
 
-// router.get('/GetBanks',(req,res)=>{
-//     let query = `select bankID from bank;`;
-//     let promise = new Promise(function(resolve, reject) {
-//         db.query(query, [], function (results, fields) {
-//             // 以json的形式返回
-//             //判断是不是admin
-//             resolve(results)
-//         })
-//     }).then(data => {
-//         res.json(data)
-//     })
-// })
+router.get('/GetBanksList',(req,res)=>{
+    let query = `select bankID from bank;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
 
 router.post('/GetBanks',(req,res)=>{
     console.log("account",req.body.LoginPerson);
@@ -172,6 +172,19 @@ router.post('/GetBanks',(req,res)=>{
 
 router.post('/GetAccounts',(req,res)=>{
     let query = `select accountID from access where perID = "${req.body.LoginPerson}" and bankID = "${req.body.BankID}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.post('/GetAccountsList',(req,res)=>{
+    let query = `select accountID from access where bankID = "${req.body.BankID}";`;
     let promise = new Promise(function(resolve, reject) {
         db.query(query, [], function (results, fields) {
             // 以json的形式返回
@@ -227,6 +240,43 @@ router.post('/CreateFee',(req,res)=>{
     var promise = new Promise(function(resolve, reject){
         let query = `call create_fee("${req.body.BankID}", "${req.body.AccountID}", "${req.body.FeeType}");`;        
         connection.query(query, function (err, result) {
+            if(err){
+            console.log('[INSERT ERROR] - ',err.message);
+            return;
+            }        
+            data = result
+            resolve(data)  
+            // res.end(JSON.stringify(data));
+            });
+        }).then(data => {
+            res.end(JSON.stringify(data));
+        })
+    })
+
+router.post('/Transfer',(req,res)=>{
+    console.log("Transfer",req.body);
+    var promise = new Promise(function(resolve, reject){
+        let time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+        let query = `call account_transfer("${req.body.PersonID}", ${req.body.Amount}, "${req.body.BankID}", "${req.body.AccountID}", "${req.body.ToBankID}", "${req.body.ToAccountID}","${time}");`;        
+        connection.query(query, function (err, result) {
+        if(err){
+        console.log('[INSERT ERROR] - ',err.message);
+        return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+    }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
+router.get('/pay',(req,res)=>{
+    console.log("pay");
+    var promise = new Promise(function(resolve, reject){
+        let query = `call pay_employees();`;        
+        connection.query(query, function (err, result) {
         if(err){
         console.log('[INSERT ERROR] - ',err.message);
         return;
@@ -249,6 +299,64 @@ router.post('/createCorp',(req,res)=>{
     // let query = `insert into corporation values ("${req.body.corpID}", "${req.body.corpLN}", "${req.body.corpSN}", "${req.body.corpAssets}");`;
     var promise = new Promise(function(resolve, reject){
         var query = `insert into corporation values ("${req.body.corpID}", "${req.body.corpLN}", "${req.body.corpSN}", "${req.body.corpAssets}");`;
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[INSERT ERROR] - ',err.message);
+          return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
+      })
+})
+
+router.get('/managerList',(req,res)=>{
+    let query = `select perID from employee where perID not in (select manager from bank);`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/corpList',(req,res)=>{
+    let query = `select corpID from corporation;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/employeeList',(req,res)=>{
+    let query = `select perID from employee;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.post('/createBank',(req,res)=>{
+    console.log("Bank",req.body);
+    // let query = `insert into corporation values ("${req.body.corpID}", "${req.body.corpLN}", "${req.body.corpSN}", "${req.body.corpAssets}");`;
+    var promise = new Promise(function(resolve, reject){
+        var query = `call create_bank("${req.body.bankID}","${req.body.bankName}","${req.body.street}","${req.body.city}","${req.body.stateabbr}","${req.body.zipcode}",${req.body.asset},"${req.body.manager}","${req.body.corpID}","${req.body.employeeID}")`;
         connection.query(query, function (err, result) {
         if(err){
           console.log('[INSERT ERROR] - ',err.message);

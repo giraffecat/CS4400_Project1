@@ -32,6 +32,7 @@
           label="Total Assets($)">
         </el-table-column>
       </el-table>
+      <el-button @click="back" class="btn" type="primary">Back</el-button>
     </div>
   </div>
 </template>
@@ -47,6 +48,9 @@ export default {
       this.CorporationStats();
     },
     methods: {
+      back: function(){
+        this.$router.push('/viewstats')
+      },
       CorporationStats:function(){
         console.log("asda",this.account, this.password)
         this.axios({
