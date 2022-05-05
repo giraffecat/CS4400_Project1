@@ -183,6 +183,50 @@ router.post('/GetAccounts',(req,res)=>{
     })
 })
 
+router.post('/GetInterestAccountsByBank',(req,res)=>{
+    let query = `select interest_bearing.accountID from interest_bearing join bank_account on interest_bearing.accountID = bank_account.accountID and interest_bearing.bankID = bank_account.bankID where interest_bearing.bankID = "${req.body.BankID}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+router.post('/GetCheckingAccounts',(req,res)=>{
+    console.log("GetCheckingAccounts",req.body)
+    let query = `select checking.accountID,checking.bankID  from access join checking on access.accountID = checking.accountID and access.bankID = checking.bankID where perID = "${req.body.PersonID}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            console.log(results)
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.post('/GetSavingAccount',(req,res)=>{
+    console.log("GetSavingAccount",req.body)
+
+    let query = `select savings.accountID, savings.bankID from access join savings on access.accountID = savings.accountID and access.bankID = savings.bankID where perID = "${req.body.PersonID}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            console.log(results)
+
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
 router.post('/GetAccountsList',(req,res)=>{
     let query = `select accountID from access where bankID = "${req.body.BankID}";`;
     let promise = new Promise(function(resolve, reject) {
@@ -193,6 +237,43 @@ router.post('/GetAccountsList',(req,res)=>{
         })
     }).then(data => {
         res.json(data)
+    })
+})
+
+
+router.post('/AddOverdraft',(req,res)=>{
+    console.log("AddOverdraft",req.body)
+    var promise = new Promise(function(resolve, reject){
+        let query = `call start_overdraft("${req.body.PersonID}", "${req.body.CheckingBankID}", "${req.body.CheckingAccount}", "${req.body.SavingBankID}","${req.body.SavingAccount}");`;
+        connection.query(query, function (err, result) {
+        if(err){
+        console.log('[INSERT ERROR] - ',err.message);
+        return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+    }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
+router.post('/StopOverdraft',(req,res)=>{
+    console.log("StopOverdraft",req.body)
+    var promise = new Promise(function(resolve, reject){
+        let query = `call stop_overdraft("${req.body.PersonID}", "${req.body.CheckingBankID}", "${req.body.CheckingAccount}");`;
+        connection.query(query, function (err, result) {
+        if(err){
+        console.log('[INSERT ERROR] - ',err.message);
+        return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+    }).then(data => {
+        res.end(JSON.stringify(data));
     })
 })
 
@@ -235,11 +316,47 @@ router.post('/Withdraw',(req,res)=>{
     })
 })
 
+router.post('/CreateFee',(req,res)=>{
+    console.log("account",req.body);
+    var promise = new Promise(function(resolve, reject){
+        let query = `call create_fee("${req.body.BankID}", "${req.body.AccountID}", "${req.body.FeeType}");`;        
+        connection.query(query, function (err, result) {
+            if(err){
+            console.log('[INSERT ERROR] - ',err.message);
+            return;
+            }        
+            data = result
+            resolve(data)  
+            // res.end(JSON.stringify(data));
+            });
+        }).then(data => {
+            res.end(JSON.stringify(data));
+        })
+    })
+
 router.post('/Transfer',(req,res)=>{
     console.log("Transfer",req.body);
     var promise = new Promise(function(resolve, reject){
         let time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         let query = `call account_transfer("${req.body.PersonID}", ${req.body.Amount}, "${req.body.BankID}", "${req.body.AccountID}", "${req.body.ToBankID}", "${req.body.ToAccountID}","${time}");`;        
+        connection.query(query, function (err, result) {
+        if(err){
+        console.log('[INSERT ERROR] - ',err.message);
+        return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+    }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
+router.get('/pay',(req,res)=>{
+    console.log("pay");
+    var promise = new Promise(function(resolve, reject){
+        let query = `call pay_employees();`;        
         connection.query(query, function (err, result) {
         if(err){
         console.log('[INSERT ERROR] - ',err.message);
@@ -391,10 +508,10 @@ router.post('/createCustomer',(req,res)=>{
 })
 
 router.post('/createBank',(req,res)=>{
-    // console.log("Bank",req.body.corpID, req.body.corpLN, req.body.corpSN, req.body.corpAssets);
+    console.log("Bank",req.body);
     // let query = `insert into corporation values ("${req.body.corpID}", "${req.body.corpLN}", "${req.body.corpSN}", "${req.body.corpAssets}");`;
     var promise = new Promise(function(resolve, reject){
-        var query = `call create_bank("${req.body.bankID}","${req.body.bankName}","${req.body.street}","${req.body.city}","${req.body.stateabbr}","${req.body.zipcode}","${req.body.asset}","${req.body.manager}","${req.body.corpID}","${req.body.employeeID}")`;
+        var query = `call create_bank("${req.body.bankID}","${req.body.bankName}","${req.body.street}","${req.body.city}","${req.body.stateabbr}","${req.body.zipcode}",${req.body.asset},"${req.body.manager}","${req.body.corpID}","${req.body.employeeID}")`;
         connection.query(query, function (err, result) {
         if(err){
           console.log('[INSERT ERROR] - ',err.message);

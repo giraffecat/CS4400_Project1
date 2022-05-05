@@ -5,11 +5,30 @@
         Pay employees
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Pay all employees</el-button>
+        <el-button class="btn" type="primary" @click="pay">Pay all employees</el-button>
       </div>
     </div>
   </div>
 </template>
+<script>
+
+export default {
+  methods:{
+    pay:function() {
+      this.axios({
+        method: "get",
+        url: "http://localhost:3000/pay", // 接口地址
+        }).then(res => {
+          this.$message({
+            message: `successful!`,
+            type: 'success'
+          });
+      })
+    }
+  }
+}
+
+</script>
 
 <style>
 .flex-container {
