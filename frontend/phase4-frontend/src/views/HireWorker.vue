@@ -30,7 +30,7 @@
       </div>
       <div class="buttons-item" >
         <el-button class="btn" type="primary" @click="onCancel">Back</el-button>
-        <el-button class="btn" type="primary" @click="onCreate">Confirm</el-button>
+        <el-button class="btn" type="primary" @click="HireWorker">Confirm</el-button>
       </div>
     </div>
   </div>
@@ -78,6 +78,9 @@ export default {
           this.form.employeeList=result
           console.log(result)
         }).catch(error => console.log(error, "error")); // 失败的返回
+      },
+      HireWorker:function() {
+        
       }
     }
 }
