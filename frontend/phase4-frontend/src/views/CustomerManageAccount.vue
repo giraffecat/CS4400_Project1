@@ -4,55 +4,241 @@
             <div class = "title"> 
               Manage Account Access
             </div>
-            <div class="subtitle">
-              Existing Accounts: Add/Remove Owners
+            <div class="sub-container">
+              <div class= "column1">
+                <div align="center">Add/Remove Owners</div>
+                <el-select class="item" v-model="choosedAccount" placeholder="Accessible Accounts">
+                  <el-option
+                    v-for="item in form.BankAccountID"
+                    :key="item.accountID + '-' + item.bankID"
+                    :value="item.accountID + '-' + item.bankID">
+                  </el-option>
+                </el-select>
+                <el-select class="item" v-model="SelectedCostumer" placeholder="Customer">
+                  <el-option
+                    v-for="item in form.customerID"
+                    :key="item.perID"
+                    :value="item.perID">
+                  </el-option>
+                </el-select>
+              <div class="item">
+                <input type="checkbox" value="Adding Owner?" id="checkbox" v-model="checked">
+                <label for="checkbox">Add/Remove Owner</label>
+              </div>
+              </div>
             </div>
-            <div class="menu-item" >
-              <el-select v-model="form.accountID" placeholder="Accessible Accounts">
-                <el-option
-                  v-for="item in options"
-                  :key="item.accountID"
-                  :label="item.accountID"
-                  :value="item.accountID">
-                </el-option>
-              </el-select>
+
+            <div>
+              <div class="input">
+                <el-input v-model="InitialBalance" placeholder="$Initial balance"></el-input>
+                <el-input v-model="InterestRate" placeholder="Interest Rate"></el-input>
+              </div>
+              <div class="input">
+                <el-input v-model="MinBalance" placeholder="$Min Balance"></el-input>
+                <el-input v-model="MaxWithdrawals" placeholder="Max Withdrawals"></el-input>
+              </div>
             </div>
-            <div class="menu-item" >
-              <el-select v-model="form.customerID" placeholder="Customer">
-                <el-option
-                  v-for="item in options"
-                  :key="item.customerID"
-                  :label="item.customerID"
-                  :value="item.customerID">
-                </el-option>
-              </el-select>
-            </div>
-            <div class="menu-item" >
-              <input type="checkbox" value="Adding Owner?" id="checkbox" v-model="checked">
-              <label for="checkbox">Adding Owner?</label>
-            </div>
-            <div class="input">
-              <el-input v-model="InitialBalance" placeholder="$Initial balance"></el-input>
-              <el-input v-model="InterestRate" placeholder="Interest Rate"></el-input>
-            </div>
-            <div class="input">
-              <el-input v-model="MinBalance" placeholder="$Min Balance"></el-input>
-              <el-input v-model="MaxWithdrawals" placeholder="Max Withdrawals"></el-input>
-            </div>
-            <div class="menu-item">
+            <div class="menu-item2">
               <el-button @click="back" class="btn" type="primary">Back</el-button>
-              <el-button class="btn" type="primary">Confirm</el-button>
+              <el-button @click="submit" class="btn" type="primary">Confirm</el-button>
             </div>
         </div>
     </div>    
 </template>
+<script>
+
+export default {
+  name:"AdminManageAccount",
+  mounted(){
+    this.GetAccountsByID();
+    this.GetCustomers();
+    this.GetBanksList();
+  },
+  data(){
+    return {
+      form: {
+        BankAccountID:[],
+        customerID:[],
+        bankID:[],
+        newAccountID:[]
+      },
+      choosedAccount:null,
+      SelectedBankID:null,
+      SelectedCostumer:null,
+      NewAccountID:null,
+      AccountType:null,
+      InitialBalance: null,
+      InterestRate: null,
+      MinBalance:null,
+      MaxWithdrawals:null,
+      checked:false,
+    }
+  },
+  methods: {
+    back: function(){
+      this.$router.push('/adminmenu')
+    },
+    submit:function(){
+      if(this.checked){
+        this.AccessAccount();
+      }else {
+        this.RemoveAccessAccount();
+      }
+    },
+    GetBanksList: function() {
+      this.axios({
+      method: "get",
+      url: "http://localhost:3000/GetBanksList", // 接口地址
+      }).then(res => {
+        console.log("GetBanksList",res.data)
+        this.form.bankID = res.data
+      })
+    },
+    GetCustomers: function() {
+      this.axios({
+      method: "get",
+      url: "http://localhost:3000/GetCustomers", // 接口地址
+      }).then(res => {
+        console.log("customer",res.data)
+        this.form.customerID = res.data
+      })
+    },
+    
+    GetAccountsByID:function(){
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/GetAccountsByID", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson,
+      }
+      }).then(res => {
+        console.log("GetAccountsByID",res)
+        this.form.BankAccountID = res.data
+      })
+    },
+    AddAccount: function() {
+      console.log("addAccount")
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/AddAccountAccess", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson,
+        Customer: this.SelectedCostumer,
+        AccountType: this.AccountType,
+        BankID:this.SelectedBankID,
+        AccountIP: this.NewAccountID,
+        Balance: this.InitialBalance,
+        InterestRate: this.InterestRate,
+        MinBalance: this.MinBalance,
+        MaxWithdrawals: this.MaxWithdrawals,
+      }
+      }).then(res => {
+        if(res.data.affectedRows != 0) {
+            this.$message({
+              message: `Sucessfully Add account access!`,
+              type: 'success'
+            });
+        }else {
+            this.$message({
+            message: `Fail to Add account access!`,
+            type: 'warning'
+          });
+        }
+      })
+    },
+
+    AccessAccount: function() {
+      console.log("AccessAccount")
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/AddAccountAccess", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson,
+        Customer: this.SelectedCostumer,
+        AccountType: this.AccountType,
+        BankID:this.choosedAccount.split('-')[1],
+        AccountIP: this.choosedAccount.split('-')[0],
+        Balance: this.InitialBalance,
+        InterestRate: this.InterestRate,
+        MinBalance: this.MinBalance,
+        MaxWithdrawals: this.MaxWithdrawals,
+      }
+      }).then(res => {
+        if(res.data.affectedRows != 0) {
+            this.$message({
+              message: `Sucessfully Add account access!`,
+              type: 'success'
+            });
+        }else {
+            this.$message({
+            message: `Fail to Add account access!`,
+            type: 'warning'
+          });
+        }
+      })
+    },
+
+    RemoveAccessAccount: function() {
+      console.log("RemoveAccessAccount")
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/RemoveAccountAccess", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson,
+        Customer: this.SelectedCostumer,
+        AccountType: this.AccountType,
+        BankID:this.choosedAccount.split('-')[1],
+        AccountIP: this.choosedAccount.split('-')[0],
+        Balance: this.InitialBalance,
+        InterestRate: this.InterestRate,
+        MinBalance: this.MinBalance,
+        MaxWithdrawals: this.MaxWithdrawals,
+      }
+      }).then(res => {
+        console.log("res",res)
+        if(res.data.affectedRows != 0) {
+            this.$message({
+              message: `Sucessfully remove account access!`,
+              type: 'success'
+            });
+        }else {
+            this.$message({
+            message: `Fail to remove account access!`,
+            type: 'warning'
+          });
+        }
+      })
+    }  
+
+  }
+}
+</script>
+
 
 <style scoped>
+.sub-container{
+  width: 100%;
+  height: 60%;
+  display: flex;
+  flex-direction: row;
+}
+.item{
+  margin-top: 20px;
+  width: 200px;
+}
+.column1{
+  margin-top:30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 .flex-container {
   width: 100vw;
   height: 100vh;
   display: flex; 
-  justify-content: center;
+  /* justify-content: center; */
+  
   align-items: center;
 }
 
@@ -73,9 +259,19 @@
 .subtitle{
   align-self: center;
   font-size: 20px;
+  display:inline;
+  white-space:nowrap;
+  padding:-10px;
+}
+#sub{
+  margin-left:-5px;
 }
 .menu-item{
   margin: 30px;
+  align-self: center;
+}
+.menu-item2{
+  margin: 20px,30px;
   align-self: center;
 }
 .input{
@@ -86,41 +282,22 @@
   width: 150px;
   font-size: 15px;
 }
-</style>
-
-<script>
-
-export default {
-  name:"CustomerManageAccount",
-  data(){
-    return {
-      form: {
-        accountID:"",
-        customerID:""
-      },
-      option:[{accountID:'checking_A'}]
-    }
-  },
-  mounted() {
-      //查询所在部门
-      this.customerManageAccount();
-    },
-  methods: {
-    back: function(){
-      this.$router.push('/customermenu')
-    },
-    customerManageAccount: function(){
-  
-      this.axios({
-      method: "post",
-      url: "http://localhost:3000/customerManageAccount", // 接口地址
-      data: {
-        }
-      }).then((res)=>{
-          console.log(res)
-          this.options = res.data.datalist;
-        }).catch(error => console.log(error, "error")); // 失败的返回
-    }
-  }
+.menu-item1{
+  margin: 30px;
+  white-space:nowrap;
+  display:flex;
 }
-</script>
+#type1{
+  position:relative;
+  text-align:right;
+}
+.blank1{
+  position:relative;
+  width:8%;
+}
+.blank2{
+  position:relative;
+  width:14%;
+}
+
+</style>
