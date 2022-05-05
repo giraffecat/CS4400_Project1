@@ -10,7 +10,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost', // 服务器地址
     user: 'root', // mysql用户名称
-    password: 'zh1998501', // mysql用户密码
+    password: '970518', // mysql用户密码
     port: '3306', // 端口
     database: 'bank_management', // 数据
   });
@@ -208,6 +208,24 @@ router.post('/Withdraw',(req,res)=>{
     var promise = new Promise(function(resolve, reject){
         let time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         let query = `call account_withdrawal("${req.body.PersonID}", ${req.body.Amount}, "${req.body.BankID}", "${req.body.AccountID}", "${time}");`;        
+        connection.query(query, function (err, result) {
+        if(err){
+        console.log('[INSERT ERROR] - ',err.message);
+        return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+    }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
+router.post('/CreateFee',(req,res)=>{
+    console.log("account",req.body);
+    var promise = new Promise(function(resolve, reject){
+        let query = `call create_fee("${req.body.BankID}", "${req.body.AccountID}", "${req.body.FeeType}");`;        
         connection.query(query, function (err, result) {
         if(err){
         console.log('[INSERT ERROR] - ',err.message);
