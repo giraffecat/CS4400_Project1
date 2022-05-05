@@ -18,7 +18,7 @@
         <el-button class="btn" type="primary" @click="ViewEmployeesStats">Display Employees Stats</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary" @click="LogOut">Log out</el-button>
+        <el-button class="btn" type="primary" @click="back">back</el-button>
       </div>
       </div>
   </div>
