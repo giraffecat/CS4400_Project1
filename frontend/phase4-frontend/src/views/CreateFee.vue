@@ -118,7 +118,14 @@ export default {
 
 
     CreateFee:function() {
-      if(this.selectedBank && this.selectedAccount && this.FeeType) {
+      if(this.FeeType != 'low balance' && this.FeeType != 'overdraft' ){  
+        //  && 'withdrawal' && 'credit union' && 'administrative' && 'fee' && 'frequency'    && this.FeeType != 'withdrawal' && this.FeeType != 'credit union'
+          this.$message({
+          message: `Please input right type`,
+          type: 'warning'
+        });
+      }
+      else if(this.selectedBank && this.selectedAccount && this.FeeType) {
         this.axios({
           method: "post",
           url: "http://localhost:3000/CreateFee", // 接口地址
