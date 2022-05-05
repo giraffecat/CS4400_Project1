@@ -10,7 +10,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost', // 服务器地址
     user: 'root', // mysql用户名称
-    password: 'kd971119', // mysql用户密码
+    password: 'zh1998501', // mysql用户密码
     port: '3306', // 端口
     database: 'bank_management', // 数据
   });
@@ -451,26 +451,39 @@ router.post('/replaceManager',(req,res)=>{
     })
 })
 
-// router.post('/replaceManager',(req,res)=>{
-//     var promise = new Promise(function(resolve, reject){
-//         console.log(req.body)
-//         let query = `call replace_manager("${req.body.EmployeeID}", "${req.body.BankID}", ${req.body.Salary});`;
-//         connection.query(query, function (err, result) {
-//         if(err){
-//           console.log('[INSERT ERROR] - ',err.message);
-//           return;
-//         }        
-//         data = result
-//         resolve(data)  
-//         // res.end(JSON.stringify(data));
-//         });
-//       }).then(data => {
-//         res.end(JSON.stringify(data));
-//     })
-// })
+router.post('/HireWorker',(req,res)=>{
+    var promise = new Promise(function(resolve, reject){
+        console.log(req.body)
+        let query = `call hire_worker("${req.body.PersonID}", "${req.body.BankID}", ${req.body.Salary});`;
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[INSERT ERROR] - ',err.message);
+          return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
 
 router.get('/employeeList',(req,res)=>{
     let query = `select perID from employee;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/PersonList',(req,res)=>{
+    let query = `select perID from person;`;
     let promise = new Promise(function(resolve, reject) {
         db.query(query, [], function (results, fields) {
             // 以json的形式返回

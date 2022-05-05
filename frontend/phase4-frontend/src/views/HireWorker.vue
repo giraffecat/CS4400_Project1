@@ -29,7 +29,7 @@
         </el-form>
       </div>
       <div class="buttons-item" >
-        <el-button class="btn" type="primary" @click="onCancel">Back</el-button>
+        <el-button class="btn" type="primary" @click="back">Back</el-button>
         <el-button class="btn" type="primary" @click="HireWorker">Confirm</el-button>
       </div>
     </div>
@@ -52,6 +52,9 @@ export default {
       this.getEmployeeList()
     },
     methods: {
+      back: function(){
+        this.$router.push('/adminmenu')
+      },
       onCreate() {
         console.log(this.global.LoginPerson);
         console.log('submit!');
@@ -72,7 +75,7 @@ export default {
       getEmployeeList(){
         this.axios({
           method:"get",
-          url: "http://localhost:3000/employeeList", // 接口地址
+          url: "http://localhost:3000/PersonList", // 接口地址
         }).then(response=>{
           let result = response.data
           this.form.employeeList=result
@@ -80,7 +83,20 @@ export default {
         }).catch(error => console.log(error, "error")); // 失败的返回
       },
       HireWorker:function() {
-        
+        this.axios({
+          method:"post",
+          url: "http://localhost:3000/HireWorker", // 接口地址
+          data:{
+            BankID: this.form.bankID,
+            PersonID: this.form.employeeID,
+            Salary: 1000,
+          }
+        }).then(res=>{
+          this.$message({
+              message: `Sucessfully hire ${this.form.employeeID}!`,
+              type: 'success'
+          });
+        }).catch(error => console.log(error, "error")); // 失败的返回
       }
     }
 }
