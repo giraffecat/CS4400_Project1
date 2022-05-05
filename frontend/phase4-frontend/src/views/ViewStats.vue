@@ -17,6 +17,7 @@
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="ViewEmployeesStats">Display Employees Stats</el-button>
       </div>
+      <el-button @click="back" class="smallbtn" type="primary">Back</el-button>
     </div>
   </div>
 </template>
@@ -25,6 +26,9 @@
 export default {
   name:"ViewStats",
   methods:{
+    back: function(){
+        this.$router.push('/adminmenu')
+    },
     ViewEmployeesStats:function(){
       this.$router.push('/employeeStats')
     },
@@ -74,5 +78,9 @@ export default {
 .btn{
   width: 200px;
   font-size: 15px;
+}
+.smallbtn{
+  width: 150px;
+  font-size: 10px;
 }
 </style>
