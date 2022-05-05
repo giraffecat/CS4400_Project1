@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
   // 定义一些公共的属性和方法
-  let LoginPerson = "mmoss7"
+  let LoginPerson = "asantiago99"
   let role = "customer"
   // let test = "tess"
   function commonFun() {

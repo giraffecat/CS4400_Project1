@@ -11,7 +11,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost', // 服务器地址
     user: 'root', // mysql用户名称
-    password: 'kd971119', // mysql用户密码
+    password: 'zh1998501', // mysql用户密码
     port: '3306', // 端口
     database: 'bank_management', // 数据
   });
@@ -199,6 +199,20 @@ router.post('/GetBanks',(req,res)=>{
 
 router.post('/GetAccounts',(req,res)=>{
     let query = `select accountID from access where perID = "${req.body.LoginPerson}" and bankID = "${req.body.BankID}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.post('/GetAccountsByID',(req,res)=>{
+    let query = `select bankID, accountID from access where perID = "${req.body.LoginPerson}";`;
+    console.log(query)
     let promise = new Promise(function(resolve, reject) {
         db.query(query, [], function (results, fields) {
             // 以json的形式返回
