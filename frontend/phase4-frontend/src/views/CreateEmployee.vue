@@ -2,24 +2,30 @@
   <div class="flex-container">
     <div class="center">
       <div class = "title"> 
-        Create Corporation
+        Create Employee Role
       </div>
-      <div class="corp-form" >
-        <el-form ref="form" :model="form" label-width="150px">
-        <el-form-item label="Corporation ID">
-          <el-input v-model="form.ID"></el-input>
+      <div class="employee-form" >
+        <el-form ref="form" :model="form" label-width="200px">
+       <el-form-item>
+       <el-select v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in corpID"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+       </el-form-item>
+        <el-form-item label="Salary">
+            <el-input v-model="form.LN"></el-input>
         </el-form-item>
-        <el-form-item label="Long Name">
-          <el-input v-model="form.LN"></el-input>
+        <el-form-item label="#of payments">
+            <el-input v-model="form.SN"></el-input>
         </el-form-item>
-        <el-form-item label="Short Name">
-          <el-input v-model="form.SN"></el-input>
-        </el-form-item>
-        <el-form-item label="Reserved Assets">
-          <el-input v-model="form.Assets"></el-input>
+        <el-form-item label="Accumulated Earnings">
+            <el-input v-model="form.Assets"></el-input>
         </el-form-item>
         </el-form>
-
       </div>
       <div class="buttons-item" >
         <el-button class="btn" type="primary" @click="onCreate">Create</el-button>
@@ -31,21 +37,21 @@
 <script>
 export default {
     data(){
-      return{
-        form: {
-            ID: '',
-            LN: '',
-            SN: '',
-            Assets: ''
+        return{
+            form: {
+          ID: '',
+          LN: '',
+          SN: '',
+          Assets: ''
         }
-      }
+        }
     },
     methods: {
       onCreate() {
         console.log('submit!');
       },
       onCancel(){
-    console.log('cancel!')
+          console.log('cancel!')
       }
     }
 }
@@ -70,7 +76,7 @@ export default {
   border: 1px solid #409EFF;
   text-align: left;
 }
-.corp-form{
+.employee-form{
   margin-top: 30px;
   margin-left: -100px;
   align-self: center;
