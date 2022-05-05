@@ -433,7 +433,7 @@ router.get('/corpList',(req,res)=>{
     })
 })
 
-router.post('/ReplaceManager',(req,res)=>{
+router.post('/replaceManager',(req,res)=>{
     // let query = `call replace_manager('${req.body.EmployeeID}', '${req.body.BankID}', ${req.body.salary});;`;
     // let promise = new Promise(function(resolve, reject) {
     //     db.query(query, [], function (results, fields) {
@@ -446,7 +446,7 @@ router.post('/ReplaceManager',(req,res)=>{
     // })
     var promise = new Promise(function(resolve, reject){
         console.log(req.body)
-        let query = `call replace_manager('${req.body.EmployeeID}', '${req.body.BankID}', ${req.body.salary});`;
+        let query = `call replace_manager("${req.body.EmployeeID}", "${req.body.BankID}", ${req.body.Salary});`;
         connection.query(query, function (err, result) {
         if(err){
           console.log('[INSERT ERROR] - ',err.message);

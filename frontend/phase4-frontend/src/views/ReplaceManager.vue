@@ -65,7 +65,7 @@ export default {
       onCancel(){
           console.log('cancel!')
       },
-            getBankList(){
+      getBankList(){
         this.axios({
           method:"get",
           url: "http://localhost:3000/getBankList", // 接口地址
@@ -83,6 +83,19 @@ export default {
           let result = response.data
           this.form.employeeList=result
           console.log(result)
+        }).catch(error => console.log(error, "error")); // 失败的返回
+      },
+      ReplaceManager(){
+         this.axios({
+          method:"post",
+          url: "http://localhost:3000/replaceManager", // 接口地址
+          data:{
+            BankID: this.form.bankID,
+            EmployeeID: this.form.employeeID,
+            Salary: this.form.newSalary,
+          }
+        }).then(res=>{
+          console.log(res)
         }).catch(error => console.log(error, "error")); // 失败的返回
       }
     }
