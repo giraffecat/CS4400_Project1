@@ -7,12 +7,12 @@
       <div class="customer-form" >
         <el-form ref="form" :model="form" label-width="100px">
        <el-form-item>
-       <el-select v-model="value" placeholder="请选择">
+       <el-select v-model="form.customerID">
             <el-option
-              v-for="item in corpID"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in form.customerList"
+              :key="item.perID"
+              :label="item.perID"
+              :value="item.perID">
             </el-option>
           </el-select>
        </el-form-item>
@@ -30,12 +30,13 @@ export default {
     data(){
         return{
             form: {
-          ID: '',
-          LN: '',
-          SN: '',
-          Assets: ''
+              customerList:[],
+              customerID:''
+            }
         }
-        }
+    },
+    created(){
+      this.getCustomerList();
     },
     methods: {
       onCreate() {
@@ -43,6 +44,16 @@ export default {
       },
       onCancel(){
           console.log('cancel!')
+      },
+      getCustomerList(){
+        this.axios({
+          method:"get",
+          url: "http://localhost:3000/getPersonList", // 接口地址
+        }).then(response=>{
+          let result = response.data
+          this.form.customerList=result
+          console.log(result)
+        }).catch(error => console.log(error, "error")); // 失败的返回
       }
     }
 }

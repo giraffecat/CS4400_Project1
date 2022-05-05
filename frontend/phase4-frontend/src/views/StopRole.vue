@@ -7,20 +7,20 @@
       <div class="stop-form" >
         <el-form ref="form" :model="form" label-width="100px">
        <el-form-item>
-       <el-select v-model="value" placeholder="请选择">
+       <el-select v-model="form.employeeID">
             <el-option
-              v-for="item in corpID"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in form.employeeList"
+              :key="item.perID"
+              :label="item.perID"
+              :value="item.perID">
             </el-option>
           </el-select>
        </el-form-item>
         </el-form>
       </div>
       <div class="buttons-item" >
-        <el-button class="btn" type="primary" @click="onCreate">Back</el-button>
-        <el-button class="btn" type="primary" @click="onCancel">Confirm</el-button>
+        <el-button class="btn" type="primary" @click="onCreateEmployee">Back</el-button>
+        <el-button class="btn" type="primary" @click="onCancelEmployee">Confirm</el-button>
       </div>
       <div class = "title"> 
         Stop Customer Role
@@ -28,20 +28,20 @@
       <div class="stop-form" >
         <el-form ref="form" :model="form" label-width="100px">
        <el-form-item>
-       <el-select v-model="value" placeholder="请选择">
+       <el-select v-model="form.customerID">
             <el-option
-              v-for="item in corpID"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in form.customerList"
+              :key="item.perID"
+              :label="item.perID"
+              :value="item.perID">
             </el-option>
           </el-select>
        </el-form-item>
         </el-form>
       </div>
       <div class="buttons-item" >
-        <el-button class="btn" type="primary" @click="onCreate">Back</el-button>
-        <el-button class="btn" type="primary" @click="onCancel">Confirm</el-button>
+        <el-button class="btn" type="primary" @click="onCreateCustomer">Back</el-button>
+        <el-button class="btn" type="primary" @click="onCancelCustomer">Confirm</el-button>
       </div>
     </div>
   </div>
@@ -51,19 +51,49 @@ export default {
     data(){
         return{
             form: {
-          ID: '',
-          LN: '',
-          SN: '',
-          Assets: ''
-        }
+          customerID: '',
+          employeeID: '',
+          employeeList: [],
+          customerList: []
+          }
         }
     },
+    created(){
+      this.getEmployeeList();
+      this.getCustomerList();
+    },
     methods: {
-      onCreate() {
-        console.log('submit!');
+      onCreateEmployee() {
+        console.log('Create employee!');
       },
-      onCancel(){
-          console.log('cancel!')
+      onCancelEmployee(){
+          console.log('Stop employee!');
+      },
+      onCreateCustomer(){
+        console.log('Create customer!');
+      },
+      onCancelCustomer(){
+        console.log('Stop customer!')
+      },
+      getEmployeeList(){
+        this.axios({
+          method:"get",
+          url: "http://localhost:3000/employeeList", // 接口地址
+        }).then(response=>{
+          let result = response.data
+          this.form.employeeList=result
+          console.log(result)
+        }).catch(error => console.log(error, "error")); // 失败的返回
+      },
+      getCustomerList(){
+        this.axios({
+          method:"get",
+          url: "http://localhost:3000/customerList", // 接口地址
+        }).then(response=>{
+          let result = response.data
+          this.form.customerList=result
+          console.log(result)
+        }).catch(error => console.log(error, "error")); // 失败的返回
       }
     }
 }

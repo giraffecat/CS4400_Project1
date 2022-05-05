@@ -6,28 +6,28 @@
       </div>
       <div class="replace-form" >
         <el-form ref="form" :model="form" label-width="100px">
-       <el-form-item>
-       <el-select v-model="value" placeholder="请选择">
+       <el-form-item label="Bank">
+        <el-select v-model="form.bankID">
             <el-option
-              v-for="item in corpID"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in form.bankList"
+              :key="item.bankID"
+              :label="item.bankID"
+              :value="item.bankID">
             </el-option>
           </el-select>
        </el-form-item>
-              <el-form-item>
-       <el-select v-model="value" placeholder="请选择">
+       <el-form-item label="Employee">
+       <el-select v-model="form.employeeID">
             <el-option
-              v-for="item in corpID"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in form.employeeList"
+              :key="item.perID"
+              :label="item.perID"
+              :value="item.perID">
             </el-option>
           </el-select>
        </el-form-item>
-       <el-form-item>
-            <el-input v-model="form.LN" placeholder="New Salary"></el-input>
+       <el-form-item label="New Salary">
+            <el-input v-model="form.newSalary" placeholder="New Salary"></el-input>
        </el-form-item>
         </el-form>
       </div>
@@ -43,12 +43,17 @@ export default {
     data(){
         return{
             form: {
-          ID: '',
-          LN: '',
-          SN: '',
-          Assets: ''
+              bankID: '',
+              bankList: [],
+              employeeID: '',
+              employeeList: [],
+              newSalary:''
         }
         }
+    },
+    created(){
+      this.getBankList();
+      this.getEmployeeList()
     },
     methods: {
       onCreate() {
@@ -56,6 +61,26 @@ export default {
       },
       onCancel(){
           console.log('cancel!')
+      },
+            getBankList(){
+        this.axios({
+          method:"get",
+          url: "http://localhost:3000/getBankList", // 接口地址
+        }).then(response=>{
+          let result = response.data
+          this.form.bankList=result
+          console.log(result)
+        }).catch(error => console.log(error, "error")); // 失败的返回
+      },
+      getEmployeeList(){
+        this.axios({
+          method:"get",
+          url: "http://localhost:3000/employeeList", // 接口地址
+        }).then(response=>{
+          let result = response.data
+          this.form.employeeList=result
+          console.log(result)
+        }).catch(error => console.log(error, "error")); // 失败的返回
       }
     }
 }
