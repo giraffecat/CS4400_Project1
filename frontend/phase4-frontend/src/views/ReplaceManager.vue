@@ -96,6 +96,17 @@ export default {
           }
         }).then(res=>{
           console.log(res)
+          if(res.data.affectedRows == 0) {
+            this.$message({
+              message: `Fail to replace the Manager!`,
+              type: 'warning'
+            });
+          } else {
+            this.$message({
+              message: `successfully the manager!`,
+              type: 'success'
+            });
+          }
         }).catch(error => console.log(error, "error")); // 失败的返回
       }
     }

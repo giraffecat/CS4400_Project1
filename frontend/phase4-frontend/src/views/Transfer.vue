@@ -149,6 +149,7 @@ export default {
             ToAccountID: this.selectedToAccount
           }
           }).then(res => {
+            console.log("transfer",res)
             this.$message({
               message: `Sucessfully Transfer`,
               type: 'success'

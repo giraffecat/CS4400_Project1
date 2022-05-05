@@ -357,6 +357,7 @@ router.post('/Transfer',(req,res)=>{
         console.log('[INSERT ERROR] - ',err.message);
         return;
         }        
+        console.log("transfer",result)
         data = result
         resolve(data)  
         // res.end(JSON.stringify(data));
@@ -445,6 +446,7 @@ router.post('/replaceManager',(req,res)=>{
           console.log('[INSERT ERROR] - ',err.message);
           return;
         }        
+        console.log("replace",result, "-------")
         data = result
         resolve(data)  
         // res.end(JSON.stringify(data));
@@ -463,6 +465,7 @@ router.post('/HireWorker',(req,res)=>{
           console.log('[INSERT ERROR] - ',err.message);
           return;
         }        
+        console.log("hire work",result)
         data = result
         resolve(data)  
         // res.end(JSON.stringify(data));
@@ -499,6 +502,7 @@ router.post('/StopEmployeeRole',(req,res)=>{
           console.log('[INSERT ERROR] - ',err.message);
           return;
         }        
+        console.log("StopEmployeeRole", result)
         data = result
         resolve(data)  
         // res.end(JSON.stringify(data));
@@ -518,6 +522,8 @@ router.post('/StopCustomerRole',(req,res)=>{
           return;
         }        
         data = result
+        console.log("StopCustomerRoleRole", result)
+
         resolve(data)  
         // res.end(JSON.stringify(data));
         });
