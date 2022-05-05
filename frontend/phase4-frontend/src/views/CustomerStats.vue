@@ -6,7 +6,7 @@
       :data="customerStats"
       stripe
       style="width:100%"
-      max-height="100vh">
+      max-height="80vh">
         <el-table-column
           prop="person_identifier"
           label="Customer ID">
