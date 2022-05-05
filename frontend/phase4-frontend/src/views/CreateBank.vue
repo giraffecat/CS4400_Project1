@@ -49,7 +49,7 @@
         </el-col>
        <el-col :span="12">
         <el-form-item label="CorpID">
-        <el-select v-model="bankform.corpID" placeholder="请选择">
+        <el-select v-model="bankform.corpID">
             <el-option
               v-for="item in bankform.corpList"
               :key="item.corpID"
@@ -61,7 +61,7 @@
        </el-col>
        <el-col :span="12">
        <el-form-item label="Manager">
-        <el-select v-model="bankform.manager" placeholder="请选择">
+        <el-select v-model="bankform.manager">
             <el-option
               v-for="item in bankform.managerList"
               :key="item.perID"
@@ -73,7 +73,7 @@
         </el-col>
        <el-col :span="12">
        <el-form-item label="Employee">
-       <el-select v-model="bankform.employeeID" placeholder="请选择">
+       <el-select v-model="bankform.employeeID">
             <el-option
               v-for="item in bankform.employeeList"
               :key="item.perID"
@@ -132,19 +132,39 @@ export default {
             stateabbr: this.bankform.stateabbr,
             zipcode: this.bankform.zipcode,
             asset: this.bankform.asset,
-            manager: this.bankform.manager,
             corpID: this.bankform.corpID,
+            manager: this.bankform.manager,
             employeeID: this.bankform.employeeID
           }
         }).then(response=>{
+          console.log("res",response)
+              this.bankform.bankID= '',
+              this.bankform.bankName= '',
+              this.bankform.street= '',
+              this.bankform.city= '',
+              this.bankform.stateabbr='',
+              this.bankform.zipcode='',
+              this.bankform.asset='',
+              this.bankform.manager='',
+              this.bankform.corpID='',
+              this.bankform.employeeID='';
+          if(response.data.affectedRows != 0) {
             this.$message({
             message: 'Sucessfully submit!',
             type: 'success'
             });
+          }
+          else{
+              this.$message({
+               message: `Fail to create the bank!`,
+              type: 'warning'
+            });
+          }
       }).catch(error => console.log(error, "error")); // 失败的返回
     },
       onCancel(){
           console.log('cancel!')
+          this.$router.push('/adminmenu')
       },
       getManagerList(){
         this.axios({
