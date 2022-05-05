@@ -316,6 +316,80 @@ router.get('/employeeList',(req,res)=>{
     })
 })
 
+
+router.get('/customerList',(req,res)=>{
+    let query = `select perID from customer;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/getPersonList',(req,res)=>{
+    let query = `select perID from person;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.get('/getBankList',(req,res)=>{
+    let query = `select bankID from bank;`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.post('/createEmployee',(req,res)=>{
+    var promise = new Promise(function(resolve, reject){
+        var query = ``;
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[INSERT ERROR] - ',err.message);
+          return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
+router.post('/createCustomer',(req,res)=>{
+    var promise = new Promise(function(resolve, reject){
+        var query = ``;
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[INSERT ERROR] - ',err.message);
+          return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
 router.post('/createBank',(req,res)=>{
     // console.log("Bank",req.body.corpID, req.body.corpLN, req.body.corpSN, req.body.corpAssets);
     // let query = `insert into corporation values ("${req.body.corpID}", "${req.body.corpLN}", "${req.body.corpSN}", "${req.body.corpAssets}");`;
