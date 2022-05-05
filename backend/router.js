@@ -2,12 +2,15 @@
 
 // 引入express并且获取路由对象
 const app = require('express')
+const moment = require('moment')
+
 const router = app.Router()
 var mysql      = require('mysql');
+
 var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password: 'kd971119', // mysql用户密码
+    host: 'localhost', // 服务器地址
+    user: 'root', // mysql用户名称
+    password: 'zh1998501', // mysql用户密码
     port: '3306', // 端口
     database: 'bank_management', // 数据
   });
@@ -127,6 +130,19 @@ router.get('/GetAccounts',(req,res)=>{
     })
 })
 
+router.post('/GetAccounts',(req,res)=>{
+    let query = `select accountID from access where perID = "${req.body.LoginPerson}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
 router.get('/GetCustomers',(req,res)=>{
     let query = `select * from customer;`;
     let promise = new Promise(function(resolve, reject) {
@@ -140,8 +156,22 @@ router.get('/GetCustomers',(req,res)=>{
     })
 })
 
-router.get('/GetBanks',(req,res)=>{
-    let query = `select bankID from bank;`;
+// router.get('/GetBanks',(req,res)=>{
+//     let query = `select bankID from bank;`;
+//     let promise = new Promise(function(resolve, reject) {
+//         db.query(query, [], function (results, fields) {
+//             // 以json的形式返回
+//             //判断是不是admin
+//             resolve(results)
+//         })
+//     }).then(data => {
+//         res.json(data)
+//     })
+// })
+
+router.post('/GetBanks',(req,res)=>{
+    console.log("account",req.body.LoginPerson);
+    let query = `select bankID from access where perID = "${req.body.LoginPerson}";`;
     let promise = new Promise(function(resolve, reject) {
         db.query(query, [], function (results, fields) {
             // 以json的形式返回
@@ -153,6 +183,45 @@ router.get('/GetBanks',(req,res)=>{
     })
 })
 
+
+
+router.post('/Deposit',(req,res)=>{
+    console.log("account",req.body);
+    var promise = new Promise(function(resolve, reject){
+        let time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+        let query = `call account_deposit("${req.body.PersonID}", ${req.body.Amount}, "${req.body.BankID}", "${req.body.AccountID}", "${time}");`;        
+        connection.query(query, function (err, result) {
+        if(err){
+        console.log('[INSERT ERROR] - ',err.message);
+        return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+    }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
+router.post('/Withdraw',(req,res)=>{
+    console.log("account",req.body);
+    var promise = new Promise(function(resolve, reject){
+        let time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+        let query = `call account_withdrawal("${req.body.PersonID}", ${req.body.Amount}, "${req.body.BankID}", "${req.body.AccountID}", "${time}");`;        
+        connection.query(query, function (err, result) {
+        if(err){
+        console.log('[INSERT ERROR] - ',err.message);
+        return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+    }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
 
 router.get('/register',(req,res)=>{
     res.send('注册')

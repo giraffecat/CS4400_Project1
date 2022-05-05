@@ -27,7 +27,7 @@
       </div>
       <div class="menu-item" >
         <el-button @click="back" class="btn" type="primary">Back</el-button>
-        <el-button class="btn" type="primary">Deposit</el-button>
+        <el-button class="btn" type="primary" @click = "Deposit">Deposit</el-button>
       </div>
     </div>
   </div>
@@ -59,8 +59,11 @@ export default {
     },
     GetBanks:function() {
       this.axios({
-      method: "get",
+      method: "post",
       url: "http://localhost:3000/GetBanks", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson
+      }
       }).then(res => {
         console.log("bankID",res)
         this.form.bankID = res.data
@@ -68,15 +71,41 @@ export default {
     },
     GetAccounts: function() {
       this.axios({
-      method: "get",
+      method: "post",
       url: "http://localhost:3000/GetAccounts", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson
+      }
       }).then(res => {
         console.log("account",res.data)
         this.form.accountID = res.data
       })
     },
     show:function(){
-      console.log(this.global.httpUrl);
+      console.log("asd",this.global.LoginPerson);
+    },
+    Deposit:function() {
+      console.log("this.global.LoginPerson",this.global.LoginPerson)
+      if(this.Amount && this.selectedBank && this.selectedAccount) {
+        this.axios({
+          method: "post",
+          url: "http://localhost:3000/Deposit", // 接口地址
+          data:{
+            PersonID : this.global.LoginPerson,
+            Amount : this.Amount,
+            BankID: this.selectedBank,
+            AccountID: this.selectedAccount
+          }
+          }).then(res => {
+            // console.log("account",res.data)
+            // this.form.accountID = res.data
+          })
+      }else {
+        this.$message({
+          message: `Please check your select`,
+          type: 'warning'
+        });
+      }
     }
   }
 }
