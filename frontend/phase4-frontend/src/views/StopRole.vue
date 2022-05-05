@@ -19,8 +19,8 @@
         </el-form>
       </div>
       <div class="buttons-item" >
-        <el-button class="btn" type="primary" @click="onCreateEmployee">Back</el-button>
-        <el-button class="btn" type="primary" @click="onCancelEmployee">Confirm</el-button>
+        <el-button class="btn" type="primary" @click="back">Back</el-button>
+        <el-button class="btn" type="primary" @click="StopEmployeeRole">Confirm</el-button>
       </div>
       <div class = "title"> 
         Stop Customer Role
@@ -40,8 +40,8 @@
         </el-form>
       </div>
       <div class="buttons-item" >
-        <el-button class="btn" type="primary" @click="onCreateCustomer">Back</el-button>
-        <el-button class="btn" type="primary" @click="onCancelCustomer">Confirm</el-button>
+        <el-button class="btn" type="primary" @click="back">Back</el-button>
+        <el-button class="btn" type="primary" @click="StopCustomerRole">Confirm</el-button>
       </div>
     </div>
   </div>
@@ -63,6 +63,9 @@ export default {
       this.getCustomerList();
     },
     methods: {
+      back: function(){
+        this.$router.push('/adminmenu')
+      },   
       onCreateEmployee() {
         console.log('Create employee!');
       },
@@ -93,6 +96,34 @@ export default {
           let result = response.data
           this.form.customerList=result
           console.log(result)
+        }).catch(error => console.log(error, "error")); // 失败的返回
+      },
+      StopEmployeeRole(){
+        this.axios({
+          method:"post",
+          url: "http://localhost:3000/StopEmployeeRole", // 接口地址
+          data:{
+            PersonID: this.form.employeeID,
+          }
+        }).then(res=>{
+          this.$message({
+              message: `Sucessfully Stop ${this.form.employeeID}!`,
+              type: 'success'
+          });
+        }).catch(error => console.log(error, "error")); // 失败的返回
+      },
+       StopCustomerRole(){
+        this.axios({
+          method:"post",
+          url: "http://localhost:3000/StopCustomerRole", // 接口地址
+          data:{
+            PersonID: this.form.customerID,
+          }
+        }).then(res=>{
+          this.$message({
+              message: `Sucessfully Stop ${this.form.customerID}!`,
+              type: 'success'
+          });
         }).catch(error => console.log(error, "error")); // 失败的返回
       }
     }

@@ -3,16 +3,16 @@
     <div class="center">
       <div class = "title">ManageUsers</div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary" @click="ViewStats">Create Employee Role</el-button>
+        <el-button class="btn" type="primary" @click="CreateEmployeeRole">Create Employee Role</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary" @click="ViewStats">Create Customers Role</el-button>
+        <el-button class="btn" type="primary" @click="CreateCustomerRole">Create Customers Role</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary" @click="ViewStats">Stop Employee Role</el-button>
+        <el-button class="btn" type="primary" @click="StopRole">Stop Employee Role</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary" @click="ViewStats">Stop Customer Role</el-button>
+        <el-button class="btn" type="primary" @click="StopRole">Stop Customer Role</el-button>
       </div>
     </div>
   </div>
@@ -22,9 +22,15 @@
 export default {
   name:"ManageUsers",
   methods:{
-    // ViewEmployeesStats:function(){
-    //   this.$router.push('/employeeStats')
-    // }
+    CreateEmployeeRole:function(){
+      this.$router.push('/createEmployee')
+    },
+    CreateCustomerRole:function(){
+      this.$router.push('/createCustomer')
+    },
+    StopRole:function() {
+      this.$router.push('/stopRole')
+    }
   }
 }
 </script>

@@ -469,6 +469,42 @@ router.post('/HireWorker',(req,res)=>{
     })
 })
 
+router.post('/StopEmployeeRole',(req,res)=>{
+    var promise = new Promise(function(resolve, reject){
+        console.log(req.body)
+        let query = `call stop_employee_role("${req.body.PersonID}");`;
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[INSERT ERROR] - ',err.message);
+          return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
+router.post('/StopCustomerRole',(req,res)=>{
+    var promise = new Promise(function(resolve, reject){
+        console.log(req.body)
+        let query = `call stop_customer_role("${req.body.PersonID}");`;
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[INSERT ERROR] - ',err.message);
+          return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
 router.get('/employeeList',(req,res)=>{
     let query = `select perID from employee;`;
     let promise = new Promise(function(resolve, reject) {
