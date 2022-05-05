@@ -8,8 +8,8 @@
         <el-select v-model="selectedcheckingAccount" placeholder="Available Checking Accounts">
            <el-option
               v-for="item in form.checkingAccount"
-              :key="item.accountID"
-              :value="item.accountID">
+              :key="item.accountID +'-'+ item.bankID"
+              :value="item.accountID +'-'+ item.bankID">
             </el-option>
         </el-select>
       </div>
@@ -22,8 +22,8 @@
           <el-select v-model="selectedsavingAccount" placeholder="Available Savings Accounts">
              <el-option
               v-for="item in form.savingAccount"
-              :key="item.accountID"
-              :value="item.accountID">
+              :key="item.accountID + '-' + item.bankID"
+              :value="item.accountID + '-' + item.bankID">
             </el-option>
           </el-select>
         </div>
@@ -36,7 +36,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .flex-container {
   width: 100vw;
   height: 100vh;
@@ -75,24 +75,24 @@ export default {
     this.GetCheckingAccount();
     this.GetSavingAccount();
   },
-  watch: {
-    selectedcheckingAccount(val){
-      for(let i = 0; i < this.form.checkingAccount.length; i++) {
-        if(val == this.form.checkingAccount[i].accountID) {
-          this.selectedcheckingBank = this.form.checkingAccount[i].bankID;
-          console.log(this.selectedcheckingBank)
-        }
-      }
-    },
-    selectedsavingAccount(val){
-      for(let i = 0; i < this.form.savingAccount.length; i++) {
-        if(val == this.form.savingAccount[i].accountID) {
-          this.selectedsavingBank = this.form.savingAccount[i].bankID;
-          console.log(this.selectedsavingBank)
-        }
-      }
-    },
-  },
+  // watch: {
+  //   selectedcheckingAccount(val){
+  //     for(let i = 0; i < this.form.checkingAccount.length; i++) {
+  //       if(val == this.form.checkingAccount[i].accountID) {
+  //         this.selectedcheckingBank = this.form.checkingAccount[i].bankID;
+  //         console.log(this.selectedcheckingBank)
+  //       }
+  //     }
+  //   },
+  //   selectedsavingAccount(val){
+  //     for(let i = 0; i < this.form.savingAccount.length; i++) {
+  //       if(val == this.form.savingAccount[i].accountID) {
+  //         this.selectedsavingBank = this.form.savingAccount[i].bankID;
+  //         console.log(this.selectedsavingBank)
+  //       }
+  //     }
+  //   },
+  // },
   data(){
     return {
       form: {
@@ -113,22 +113,17 @@ export default {
     },
     GetCheckingAccount:function() {
       this.axios({
-        method: "post",
-        url: "http://localhost:3000/GetCheckingAccounts", // 接口地址
-        data:{
-          PersonID : this.global.LoginPerson,
-        }
+        method: "get",
+        url: "http://localhost:3000/GetCheckingAccountsList", // 接口地址
         }).then(res => {
+          console.log(res)
           this.form.checkingAccount = res.data
         })
     },
     GetSavingAccount:function() {
           this.axios({
-            method: "post",
-            url: "http://localhost:3000/GetSavingAccount", // 接口地址
-            data:{
-              PersonID : this.global.LoginPerson,
-            }
+            method: "get",
+            url: "http://localhost:3000/GetSavingAccountList", // 接口地址
             }).then(res => {
                this.form.savingAccount = res.data
             })
@@ -141,22 +136,30 @@ export default {
       }
     },
     AddOverdraft:function(){
+      console.log("addOverdraft",this.selectedcheckingAccount.split("-")[0])
       console.log("AddOverdraft")
       this.axios({
         method: "post",
         url: "http://localhost:3000/AddOverdraft", // 接口地址
         data:{
           PersonID : this.global.LoginPerson,
-          CheckingBankID: this.selectedcheckingBank,
-          CheckingAccount: this.selectedcheckingAccount,
-          SavingBankID: this.selectedsavingBank,
-          SavingAccount: this.selectedsavingAccount,
+          CheckingBankID: this.selectedcheckingAccount.split("-")[1],
+          CheckingAccount: this.selectedcheckingAccount.split("-")[0],
+          SavingBankID: this.selectedsavingAccount.split("-")[1],
+          SavingAccount: this.selectedsavingAccount.split("-")[0],
         }
         }).then(res => {
-          this.$message({
-            message: `Sucessfully Add Overdraft!`,
-            type: 'success'
-          });
+          if(res.data.affectedRows != 0) {
+            this.$message({
+              message: `Sucessfully Add Overdraft!`,
+              type: 'success'
+            });
+          }else {
+             this.$message({
+              message: `Fail to Add Overdraft!`,
+              type: 'warning'
+            });
+          }
       })
     },
     StopOverdraft:function() {
@@ -165,14 +168,21 @@ export default {
         url: "http://localhost:3000/StopOverdraft", // 接口地址
         data:{
           PersonID : this.global.LoginPerson,
-          CheckingBankID: this.selectedcheckingBank,
-          CheckingAccount: this.selectedcheckingAccount,
+          CheckingBankID: this.selectedcheckingAccount.split("-")[1],
+          CheckingAccount: this.selectedcheckingAccount.split("-")[0],
         }
         }).then(res => {
+          if(res.data.affectedRows != 0) {
           this.$message({
             message: `Sucessfully Stop Overdraft!`,
             type: 'success'
           });
+        }else {
+          this.$message({
+            message: `Fail to Stop Overdraft!`,
+            type: 'warning'
+          });
+        }
       })
     }
   }

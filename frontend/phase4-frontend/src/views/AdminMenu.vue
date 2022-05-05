@@ -25,11 +25,10 @@
       </div>
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="CreateBank">Create Bank</el-button>
-        <!-- <el-button class="btn" type="primary" @click="Create Bank">View Stats</el-button> -->
-      </div>
-      <div class="menu-item" >
         <el-button class="btn" type="primary" @click="LogOut">Log out</el-button>
       </div>
+      <!-- <div class="menu-item" >
+      </div> -->
       
     </div>
         
@@ -76,7 +75,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 .flex-container {
   width: 100vw;
   height: 100vh;

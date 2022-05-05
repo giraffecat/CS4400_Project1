@@ -14,6 +14,9 @@
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="StopRole">Stop Customer Role</el-button>
       </div>
+      <div class="menu-item" >
+        <el-button class="btn" type="primary" @click="back">Back</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -30,12 +33,15 @@ export default {
     },
     StopRole:function() {
       this.$router.push('/stopRole')
+    },
+    back: function(){
+      this.$router.push('/adminmenu')
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .flex-container {
   width: 100vw;
   height: 100vh;
