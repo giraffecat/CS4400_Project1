@@ -96,6 +96,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/HireWorker.vue')
   },
   {
+    path: '/hireWorker_manager',
+    name: 'HireWorker_manager',
+    component: () => import(/* webpackChunkName: "about" */ '../views/HireWorker_manager.vue')
+  },
+  {
     path: '/replaceManager',
     name: 'ReplaceManager',
     component: () => import(/* webpackChunkName: "about" */ '../views/ReplaceManager.vue')
@@ -144,6 +149,11 @@ const routes = [
     path: '/pay',
     name: 'Pay',
     component: () => import(/* webpackChunkName: "about" */ '../views/PayEmployee.vue')
+  },
+  {
+    path: '/pay_manager',
+    name: 'Pay_manager',
+    component: () => import(/* webpackChunkName: "about" */ '../views/PayEmployee_manager.vue')
   }
 ]
 

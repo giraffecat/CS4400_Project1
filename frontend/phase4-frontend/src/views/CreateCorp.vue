@@ -60,10 +60,16 @@ export default {
             }).then(response=>{
               console.log("error",response)
               this.$refs[formName].resetFields();
+              this.corpform.corpAssets=''
+              if(response.data=='error'){
+                this.$message.error('Failed! You submit a duplicate corporation!');
+              }
+              else{
                 this.$message({
                 message: 'Sucessfully submit!',
                 type: 'success'
                 });
+              }
             }).catch(error => console.log(error, "error")); // 失败的返回
           } else{
             this.$message({

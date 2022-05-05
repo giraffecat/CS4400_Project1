@@ -10,7 +10,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost', // 服务器地址
     user: 'root', // mysql用户名称
-    password: 'zh1998501', // mysql用户密码
+    password: 'kd971119', // mysql用户密码
     port: '3306', // 端口
     database: 'bank_management', // 数据
   });
@@ -466,6 +466,24 @@ router.post('/HireWorker',(req,res)=>{
           return;
         }        
         console.log("hire work",result)
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
+router.post('/getManagerBank',(req,res)=>{
+    var promise = new Promise(function(resolve, reject){
+        console.log(req.body)
+        let query = `select bankID from bank where manager="${req.body.perID}"`;
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[SELECT ERROR] - ',err.message);
+          return;
+        }        
         data = result
         resolve(data)  
         // res.end(JSON.stringify(data));
