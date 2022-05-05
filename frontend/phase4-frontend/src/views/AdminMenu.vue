@@ -8,7 +8,7 @@
         <el-button class="btn" type="primary" @click="ViewStats">View Stats</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Create Corporation</el-button>
+        <el-button class="btn" type="primary" @click="CreateCorp">Create Corporation</el-button>
         <el-button class="btn" type="primary">Create Fee</el-button>
       </div>
       <div class="menu-item" >
@@ -24,7 +24,7 @@
         <el-button class="btn" type="primary">Manager Account</el-button>
       </div>
       <div class="menu-item" >
-        <el-button class="btn" type="primary">Create Bank</el-button>
+        <el-button class="btn" type="primary" @click="CreateBank">Create Bank</el-button>
         <!-- <el-button class="btn" type="primary" @click="Create Bank">View Stats</el-button> -->
       </div>
     </div>
@@ -39,6 +39,12 @@ export default {
     },
     ManageUsers: function(){
       this.$router.push('/manageusers')
+    },
+    CreateCorp: function(){
+      this.$router.push('/createCorp')
+    },
+    CreateBank: function(){
+      this.$router.push('/createBank')
     }
   }
 }

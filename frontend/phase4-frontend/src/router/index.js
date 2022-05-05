@@ -36,8 +36,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/ViewStats.vue')
   },
   {
-    path: '/ManageUsers',
-    name: 'manageusers',
+    path: '/manageusers',
+    name: 'ManageUsers',
     component: () => import(/* webpackChunkName: "about" */ '../views/ManageUsers.vue')
   },
   {
@@ -64,6 +64,86 @@ const routes = [
     path: '/customerStats',
     name: 'CustomerStats',
     component: () => import(/* webpackChunkName: "about" */ '../views/CustomerStats.vue')
+  },
+  {
+    path: '/createCorp',
+    name: 'CreateCorp',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateCorp.vue')
+  },
+  {
+    path: '/createBank',
+    name: 'CreateBank',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateBank.vue')
+  },
+  {
+    path: '/createEmployee',
+    name: 'CreateEmployee',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateEmployee.vue')
+  },
+  {
+    path: '/createCustomer',
+    name: 'CreateCustomer',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateCustomer.vue')
+  },
+  {
+    path: '/stopRole',
+    name: 'StopRole',
+    component: () => import(/* webpackChunkName: "about" */ '../views/StopRole.vue')
+  },
+  {
+    path: '/hireWorker',
+    name: 'HireWorker',
+    component: () => import(/* webpackChunkName: "about" */ '../views/HireWorker.vue')
+  },
+  {
+    path: '/replaceManager',
+    name: 'ReplaceManager',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ReplaceManager.vue')
+  },
+  {
+    path: '/customerManageAccount',
+    name: 'CustomerManageAccount',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CustomerManageAccount.vue')
+  },
+  {
+    path: '/adminManageAccount',
+    name: 'AdminManageAccount',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminManageAccount.vue')
+  },
+  {
+    path: '/createfee',
+    name: 'CreateFee',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateFee.vue')
+  },
+  {
+    path: '/adminManageOverdraft',
+    name: 'AdminManageOverdraft',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminManageOverdraft.vue')
+  },
+  {
+    path: '/customerManageOverdraft',
+    name: 'CustomerManageOverdraft',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CustomerManageOverdraft.vue')
+  },
+  {
+    path: '/deposit',
+    name: 'Deposit',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Deposit.vue')
+  },
+  {
+    path: '/withdrawal',
+    name: 'Withdrawal',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Withdrawal.vue')
+  },
+  {
+    path: '/transfer',
+    name: 'Transfer',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Transfer.vue')
+  },
+  {
+    path: '/pay',
+    name: 'Pay',
+    component: () => import(/* webpackChunkName: "about" */ '../views/PayEmployee.vue')
   }
 ]
 
