@@ -9,7 +9,7 @@
       </div>
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="CreateCorp">Create Corporation</el-button>
-        <el-button class="btn" type="primary" @click="CreateBank">Create Fee</el-button>
+        <el-button class="btn" type="primary" @click="CreateFee">Create Fee</el-button>
       </div>
       <div class="menu-item" >
         <el-button class="btn" type="primary"  @click="ManageUsers">Manage Users</el-button>
@@ -45,6 +45,9 @@ export default {
     },
     CreateBank: function(){
       this.$router.push('/createBank')
+    },
+    CreateFee: function(){
+      this.$router.push('/createfee')
     },
     AdminManageAccount:function() {
       this.$router.push('/adminManageAccount')
