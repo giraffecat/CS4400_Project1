@@ -96,6 +96,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/HireWorker.vue')
   },
   {
+    path: '/hireWorker_manager',
+    name: 'HireWorker_manager',
+    component: () => import(/* webpackChunkName: "about" */ '../views/HireWorker_manager.vue')
+  },
+  {
     path: '/replaceManager',
     name: 'ReplaceManager',
     component: () => import(/* webpackChunkName: "about" */ '../views/ReplaceManager.vue')
