@@ -41,9 +41,22 @@ export default {
     methods: {
       onCreate() {
         console.log('submit!');
+        this.axios({
+          method:"post",
+          url: "http://localhost:3000/createCustomer", // 接口地址
+          data:{
+            customerID: this.form.customerID   // 传接口参数
+          }
+        }).then(response=>{
+            this.$message({
+            message: 'Sucessfully submit!',
+            type: 'success'
+            });
+        }).catch(error => console.log(error, "error")); // 失败的返回
       },
       onCancel(){
           console.log('cancel!')
+          this.$router.push('/adminmenu')
       },
       getCustomerList(){
         this.axios({
