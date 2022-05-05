@@ -5,17 +5,29 @@
         New Fee
       </div>
       <div class="menu-item" >
-        <el-select v-model="form.bankID" placeholder="Bank"></el-select>
+        <el-select v-model="selectedBank" placeholder="Bank">
+          <el-option
+              v-for="item in form.bankID"
+              :key="item.bankID"
+              :value="item.bankID">
+          </el-option>
+        </el-select>
       </div>
       <div class="menu-item" >
-        <el-select v-model="form.accountId" placeholder="Account"></el-select>
+        <el-select v-model="selectedAccount" placeholder="Account">
+          <el-option
+              v-for="item in form.accountID"
+              :key="item.accountID"
+              :value="item.accountID">
+          </el-option>
+        </el-select>
       </div>
       <div class="menu-item" >
         <el-input v-model="FeeType" placeholder="Fee Type"></el-input>
       </div>
       <div class="menu-item" >
         <el-button @click="back" class="btn" type="primary">Back</el-button>
-        <el-button class="btn" type="primary">Confirm</el-button>
+        <el-button class="btn" type="primary" @click="CreateFee">Confirm</el-button>
       </div>
     </div>
   </div>
@@ -64,12 +76,71 @@ export default {
         accountID:"",
         bankID:""
       },
-      option:[]
+      FeeType:null,
+      option:[],
+      selectedBank:null,
+      selectedAccount:null
     }
+  },
+  watch: {
+    selectedBank(val){
+      this.GetAccounts();
+    }
+  },
+  mounted(){
+    this.GetBanks();
   },
   methods: {
     back: function(){
       this.$router.push('/adminmenu')
+    },
+    GetBanks:function() {
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/GetBanks", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson
+      }
+      }).then(res => {
+        console.log("bankID",res)
+        this.form.bankID = res.data
+      })
+    },
+    GetAccounts: function() {
+      this.axios({
+      method: "post",
+      url: "http://localhost:3000/GetAccounts", // 接口地址
+      data:{
+        LoginPerson: this.global.LoginPerson,
+        BankID: this.selectedBank
+      }
+      }).then(res => {
+        console.log("account",res.data)
+        this.form.accountID = res.data
+      })
+    },
+    CreateFee:function() {
+      console.log("this.global.LoginPerson",this.global.LoginPerson)
+      if(this.selectedBank && this.selectedAccount && this.FeeType) {
+        this.axios({
+          method: "post",
+          url: "http://localhost:3000/CreateFee", // 接口地址
+          data:{
+            LoginPerson: this.global.LoginPerson,
+            FeeType : this.FeeType,
+            BankID: this.selectedBank,
+            AccountID: this.selectedAccount
+          }
+          }).then(res => {
+            // console.log("account",res.data)
+            // this.form.accountID = res.data
+          })
+      }else {
+        this.$message({
+          message: `Please check your select`,
+          type: 'warning'
+        });
+      }
     }
   }
 }
