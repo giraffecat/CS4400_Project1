@@ -102,8 +102,8 @@ export default {
             AccountID: this.selectedAccount
           }
           }).then(res => {
-            this.$message({
-              message: `Sucessfully login! ${this.global.LoginPerson}`,
+             this.$message({
+              message: `Sucessfully Deposit!`,
               type: 'success'
             });
           })

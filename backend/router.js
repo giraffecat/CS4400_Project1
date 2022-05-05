@@ -183,6 +183,38 @@ router.post('/GetAccounts',(req,res)=>{
     })
 })
 
+router.post('/GetCheckingAccounts',(req,res)=>{
+    console.log("GetCheckingAccounts",req.body)
+    let query = `select checking.accountID,checking.bankID  from access join checking on access.accountID = checking.accountID and access.bankID = checking.bankID where perID = "${req.body.PersonID}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            console.log(results)
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
+router.post('/GetSavingAccount',(req,res)=>{
+    console.log("GetSavingAccount",req.body)
+
+    let query = `select savings.accountID, savings.bankID from access join savings on access.accountID = savings.accountID and access.bankID = savings.bankID where perID = "${req.body.PersonID}";`;
+    let promise = new Promise(function(resolve, reject) {
+        db.query(query, [], function (results, fields) {
+            // 以json的形式返回
+            //判断是不是admin
+            console.log(results)
+
+            resolve(results)
+        })
+    }).then(data => {
+        res.json(data)
+    })
+})
+
 router.post('/GetAccountsList',(req,res)=>{
     let query = `select accountID from access where bankID = "${req.body.BankID}";`;
     let promise = new Promise(function(resolve, reject) {
@@ -193,6 +225,43 @@ router.post('/GetAccountsList',(req,res)=>{
         })
     }).then(data => {
         res.json(data)
+    })
+})
+
+
+router.post('/AddOverdraft',(req,res)=>{
+    console.log("AddOverdraft",req.body)
+    var promise = new Promise(function(resolve, reject){
+        let query = `call start_overdraft("${req.body.PersonID}", "${req.body.CheckingBankID}", "${req.body.CheckingAccount}", "${req.body.SavingBankID}","${req.body.SavingAccount}");`;
+        connection.query(query, function (err, result) {
+        if(err){
+        console.log('[INSERT ERROR] - ',err.message);
+        return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+    }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
+router.post('/StopOverdraft',(req,res)=>{
+    console.log("StopOverdraft",req.body)
+    var promise = new Promise(function(resolve, reject){
+        let query = `call stop_overdraft("${req.body.PersonID}", "${req.body.CheckingBankID}", "${req.body.CheckingAccount}");`;
+        connection.query(query, function (err, result) {
+        if(err){
+        console.log('[INSERT ERROR] - ',err.message);
+        return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+    }).then(data => {
+        res.end(JSON.stringify(data));
     })
 })
 

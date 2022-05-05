@@ -98,8 +98,10 @@ export default {
             AccountID: this.selectedAccount
           }
           }).then(res => {
-            // console.log("account",res.data)
-            // this.form.accountID = res.data
+              this.$message({
+              message: `Sucessfully Withdraw!`,
+              type: 'success'
+            });
           })
       }else {
         this.$message({
