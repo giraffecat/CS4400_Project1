@@ -48,15 +48,20 @@ export default {
             customerID: this.form.customerID   // 传接口参数
           }
         }).then(response=>{
+          this.form.customerID='';
+          if(response.data=='error'){
+            this.$message.error('Failed! You submit a duplicate customer!');
+          }else{
             this.$message({
             message: 'Sucessfully submit!',
             type: 'success'
             });
+          }
         }).catch(error => console.log(error, "error")); // 失败的返回
       },
       onCancel(){
           console.log('cancel!')
-          this.$router.push('/adminmenu')
+          this.$router.push('/manageusers')
       },
       getCustomerList(){
         this.axios({

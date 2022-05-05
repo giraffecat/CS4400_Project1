@@ -635,7 +635,7 @@ router.post('/createEmployee',(req,res)=>{
         connection.query(query, function (err, result) {
         if(err){
           console.log('[INSERT ERROR] - ',err.message);
-          return;
+          reject("error");
         }        
         data = result
         resolve(data)  
@@ -643,6 +643,9 @@ router.post('/createEmployee',(req,res)=>{
         });
       }).then(data => {
         res.end(JSON.stringify(data));
+    }).catch(error => {
+        console.log("error")
+      res.end(JSON.stringify(error));
     })
 })
 
@@ -652,7 +655,7 @@ router.post('/createCustomer',(req,res)=>{
         connection.query(query, function (err, result) {
         if(err){
           console.log('[INSERT ERROR] - ',err.message);
-          return;
+          reject("error");
         }        
         data = result
         resolve(data)  
@@ -660,6 +663,9 @@ router.post('/createCustomer',(req,res)=>{
         });
       }).then(data => {
         res.end(JSON.stringify(data));
+    }).catch(error => {
+        console.log("error")
+      res.end(JSON.stringify(error));
     })
 })
 
