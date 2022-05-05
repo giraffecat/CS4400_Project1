@@ -19,9 +19,9 @@
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="Transfer">Make Transfer</el-button>
       </div>
-      <!-- <div class="menu-item" >
-        <el-button class="btn" type="primary">Create Bank</el-button>
-      </div> -->
+      <div class="menu-item" >
+        <el-button class="btn" type="primary" @click="LogOut">Log out</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +29,9 @@
 <script>
 export default {
   methods:{
+    LogOut: function(){
+      this.$router.push('/')
+    },
     ManageAccount: function(){
       this.$router.push('/customerManageAccount')
     },

@@ -573,7 +573,7 @@ router.get('/getBankList',(req,res)=>{
 
 router.post('/createEmployee',(req,res)=>{
     var promise = new Promise(function(resolve, reject){
-        var query = ``;
+        var query = `insert into employee values ("${req.body.employeeID}", "${req.body.salary}", "${req.body.timeOfPay}", "${req.body.earnings}")`;
         connection.query(query, function (err, result) {
         if(err){
           console.log('[INSERT ERROR] - ',err.message);
@@ -590,7 +590,7 @@ router.post('/createEmployee',(req,res)=>{
 
 router.post('/createCustomer',(req,res)=>{
     var promise = new Promise(function(resolve, reject){
-        var query = ``;
+        var query = `insert into customer values ("${req.body.customerID}")`;
         connection.query(query, function (err, result) {
         if(err){
           console.log('[INSERT ERROR] - ',err.message);

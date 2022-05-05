@@ -27,13 +27,20 @@
         <el-button class="btn" type="primary" @click="CreateBank">Create Bank</el-button>
         <!-- <el-button class="btn" type="primary" @click="Create Bank">View Stats</el-button> -->
       </div>
+      <div class="menu-item" >
+        <el-button class="btn" type="primary" @click="LogOut">Log out</el-button>
+      </div>
     </div>
+        
   </div>
 </template>
 
 <script>
 export default {
   methods:{
+    LogOut: function(){
+      this.$router.push('/')
+    },
     ViewStats: function(){
       this.$router.push('/viewstats')
     },

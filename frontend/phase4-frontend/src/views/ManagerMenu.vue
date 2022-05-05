@@ -11,6 +11,9 @@
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="HireWorker">Hire Worker</el-button>
       </div>
+      <div class="menu-item" >
+        <el-button class="btn" type="primary" @click="LogOut">Log out</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -18,6 +21,9 @@
 <script>
 export default {
   methods:{
+    LogOut: function(){
+      this.$router.push('/')
+    },
     Pay: function(){
       this.$router.push('/pay')
     },
