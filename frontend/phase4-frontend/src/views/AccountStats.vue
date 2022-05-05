@@ -6,7 +6,7 @@
       :data="accountStats"
       stripe
       style="width:100%"
-      max-height="100vh">
+      max-height="80vh">
         <el-table-column
           prop="name_of_bank"
           label="Bank">

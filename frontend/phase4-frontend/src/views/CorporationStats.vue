@@ -6,7 +6,7 @@
       :data="corporationStats"
       stripe
       style="width:100%"
-      max-height="100vh">
+      max-height="80vh">
         <el-table-column
           prop="corporation_identifier"
           label="Corporation ID">
