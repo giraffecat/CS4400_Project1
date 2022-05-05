@@ -52,6 +52,7 @@
           label="Bank Assets">
         </el-table-column>
       </el-table>
+      <el-button @click="back" class="btn" type="primary">Back</el-button>
     </div>
   </div>
 </template>
@@ -67,6 +68,9 @@ export default {
       this.EmployeeStats();
     },
     methods: {
+      back: function(){
+        this.$router.push('/adminmenu')
+      },
       EmployeeStats:function(){
         console.log("asda",this.account, this.password)
         this.axios({
