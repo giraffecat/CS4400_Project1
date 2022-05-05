@@ -63,15 +63,23 @@ export default {
             earnings: this.form.earnings
           }
         }).then(response=>{
+          this.form.employeeID='';
+          this.form.salary='';
+          this.form.timeOfPay='';
+          this.form.earnings=''
+          if(response.data=='error'){
+            this.$message.error('Failed! You submit a duplicate employee!');
+          }else{
             this.$message({
             message: 'Sucessfully submit!',
             type: 'success'
             });
+          }
         }).catch(error => console.log(error, "error")); // 失败的返回
       },
       onCancel(){
           console.log('cancel!')
-          this.$router.push('/adminmenu')
+          this.$router.push('/manageusers')
       },
       getEmployeeList(){
         this.axios({
