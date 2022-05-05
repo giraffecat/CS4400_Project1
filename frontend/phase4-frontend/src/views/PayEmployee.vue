@@ -15,7 +15,15 @@
 export default {
   methods:{
     pay:function() {
-      
+      this.axios({
+        method: "get",
+        url: "http://localhost:3000/pay", // 接口地址
+        }).then(res => {
+          this.$message({
+            message: `successful!`,
+            type: 'success'
+          });
+      })
     }
   }
 }

@@ -257,7 +257,7 @@ router.post('/Transfer',(req,res)=>{
 router.get('/pay',(req,res)=>{
     console.log("pay");
     var promise = new Promise(function(resolve, reject){
-        let query = `call account_transfer("${req.body.PersonID}", ${req.body.Amount}, "${req.body.BankID}", "${req.body.AccountID}", "${req.body.ToBankID}", "${req.body.ToAccountID}","${time}");`;        
+        let query = `call pay_employees();`;        
         connection.query(query, function (err, result) {
         if(err){
         console.log('[INSERT ERROR] - ',err.message);
@@ -335,10 +335,10 @@ router.get('/employeeList',(req,res)=>{
 })
 
 router.post('/createBank',(req,res)=>{
-    // console.log("Bank",req.body.corpID, req.body.corpLN, req.body.corpSN, req.body.corpAssets);
+    console.log("Bank",req.body);
     // let query = `insert into corporation values ("${req.body.corpID}", "${req.body.corpLN}", "${req.body.corpSN}", "${req.body.corpAssets}");`;
     var promise = new Promise(function(resolve, reject){
-        var query = `call create_bank("${req.body.bankID}","${req.body.bankName}","${req.body.street}","${req.body.city}","${req.body.stateabbr}","${req.body.zipcode}","${req.body.asset}","${req.body.manager}","${req.body.corpID}","${req.body.employeeID}")`;
+        var query = `call create_bank("${req.body.bankID}","${req.body.bankName}","${req.body.street}","${req.body.city}","${req.body.stateabbr}","${req.body.zipcode}",${req.body.asset},"${req.body.manager}","${req.body.corpID}","${req.body.employeeID}")`;
         connection.query(query, function (err, result) {
         if(err){
           console.log('[INSERT ERROR] - ',err.message);
