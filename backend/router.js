@@ -472,6 +472,24 @@ router.post('/HireWorker',(req,res)=>{
     })
 })
 
+router.post('/getManagerBank',(req,res)=>{
+    var promise = new Promise(function(resolve, reject){
+        console.log(req.body)
+        let query = `select bankID from bank where manager="${req.body.perID}"`;
+        connection.query(query, function (err, result) {
+        if(err){
+          console.log('[SELECT ERROR] - ',err.message);
+          return;
+        }        
+        data = result
+        resolve(data)  
+        // res.end(JSON.stringify(data));
+        });
+      }).then(data => {
+        res.end(JSON.stringify(data));
+    })
+})
+
 router.post('/StopEmployeeRole',(req,res)=>{
     var promise = new Promise(function(resolve, reject){
         console.log(req.body)
