@@ -30,6 +30,7 @@
       <div class="menu-item" >
         <el-button class="btn" type="primary" @click="LogOut">Log out</el-button>
       </div>
+      
     </div>
         
   </div>
