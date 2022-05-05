@@ -36,7 +36,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .flex-container {
   width: 100vw;
   height: 100vh;
@@ -172,10 +172,17 @@ export default {
           CheckingAccount: this.selectedcheckingAccount.split("-")[0],
         }
         }).then(res => {
+          if(res.data.affectedRows != 0) {
           this.$message({
             message: `Sucessfully Stop Overdraft!`,
             type: 'success'
           });
+        }else {
+          this.$message({
+            message: `Fail to Stop Overdraft!`,
+            type: 'warning'
+          });
+        }
       })
     }
   }

@@ -36,7 +36,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .flex-container {
   width: 100vw;
   height: 100vh;

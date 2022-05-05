@@ -94,7 +94,7 @@ export default {
   }
 </script>
 
-<style>
+<style scoped>
 .flex-container {
   width: 100vw;
   height: 100vh;
